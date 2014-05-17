@@ -44,7 +44,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Slick Framework'
-copyright = u'2014, Filipe Silva'
+copyright = u'2014, Slick Framework'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
