@@ -9,18 +9,37 @@ Slick Framework
 Slick is a PHP 5.4+ MVC framework and tool set that aim to be simple robust and cool to work with.
 The goal was to create a PHP framework that could be used to develop web applications with agile methodologies like SCRUM or KANBAN in mind.
 
+Features
+--------
 
-Contents:
+- Cache management
+- Easy configuration
+- Dependency Injection container
+- Session handling
+- Form building (and rendering)
+- Simple ORM that uses PDO for data access
+- Data filters and validators
+- Uses `Twig <http://twig.sensiolabs.org/>`_ for a robust template engine
+- Behavior/test driven development (with `Codeception <http://codeception.com/>`_)
+- A a lot of interfaces for easy implementations of your own needs.
+
+Installation
+------------
+
+Contribute
+----------
+
+- Issue Tracker: https://github.com/slickframework/slick/issues
+- Source Code: https://github.com/slickframework/slick
+
+Support
+-------
+
+If you are having issues, please let us know.
+
 
 .. toctree::
    :maxdepth: 3
 
 
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
 
