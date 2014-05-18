@@ -76,10 +76,3 @@ The project is licensed under the MIT License (MIT)
     :maxdepth: 3
 
     components/index
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
