@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Components</title>
+    
+    <link rel="stylesheet" href="../_static/epub.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /> 
+  </head>
+  <body>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="cache.html" title="Cache"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../index.html" title="Slick Framework"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Slick Framework 1.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="components">
+<h1>Components</h1>
+<p>Slick is organized in components that can be used independently and can be installed using composer.
+When you install the full slick package (<tt class="docutils literal"><span class="pre">slick/slick</span></tt> in <a class="reference external" href="https://packagist.org">packagist</a><span class="link-target"> [https://packagist.org]</span>) all Slick
+components will be downloaded and installed.</p>
+<p>In this section we will cover all Slick modules separately.</p>
+<p><strong>Installing a module</strong></p>
+<p>Lets assume the you want to use the <tt class="docutils literal"><span class="pre">slick/template</span></tt> and <tt class="docutils literal"><span class="pre">slick/configuration</span></tt> components in your project.
+Your project&#8217;s <tt class="docutils literal"><span class="pre">composer.json</span></tt> will need to have the following entries:</p>
+<div class="highlight-json"><div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">&quot;require&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;slick/template&quot;</span><span class="p">:</span> <span class="s2">&quot;*&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;slick/configuration&quot;</span><span class="p">:</span> <span class="s2">&quot;*&quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>After updating your <tt class="docutils literal"><span class="pre">composer.json</span></tt> file you will need to run the following command:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>composer update
+</pre></div>
+</div>
+<p>This will install the components in your vendor directory.</p>
+<p><strong>Slick components</strong></p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cache.html">Cache</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cache.html#using-a-cache-driver">Using a cache driver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cache.html#the-file-cache-driver">The File cache driver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cache.html#the-memcached-cache-driver">The Memcached cache driver</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="common.html">Common library</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="common.html#understanding-the-base-class">Understanding the &#8220;Base&#8221; class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common.html#creating-singletons">Creating Singletons</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dependency.html">Dependency Injection Container</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dependency.html#defining-injections">Defining injections</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2014, Slick Framework.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

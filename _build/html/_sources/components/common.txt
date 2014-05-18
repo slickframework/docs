@@ -1,14 +1,14 @@
 .. Common library
 
 Common library
-**************
+~~~~~~~~~~~~~~
 Common library is a set of useful classes and traits that are in almost every class
 in the entire Slick framework. They form a solid base to develop on top of and help
 you remove the tedious work of create getters, setters, allow read end or write access
 to the properties and inspect classes and properties.
 
 Understanding the "Base" class
-==============================
+------------------------------
 The ``Slick\Common\Base`` class is one of the most important classes of Slick. It is responsible for the
 "magic" in classes that extends it. It is very important that you have a clear understanding of what
 this class does to really speed up your development.
@@ -214,7 +214,7 @@ when creating the object is a more elegant and flexible way of setting the objec
     ``parent::__construct()`` cause it will raise an exception if you do not do so.
 
 Creating Singletons
-===================
+-------------------
 If you need to create a singleton object and have all the ``Slick\Common\Base`` behavior this Slick component
 also have a ``Slick\Common\BaseSingleton`` that implements the ``Slick\Common\SingletonInterface`` witch has
 the getInstance() method you need to define.
