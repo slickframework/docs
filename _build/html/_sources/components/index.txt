@@ -31,3 +31,11 @@ After updating your ``composer.json`` file you will need to run the following co
     $ composer update
 
 This will install the components in your vendor directory.
+
+Slick components
+----------------
+
+.. toctree::
+    :maxdepth: 2
+
+    cache

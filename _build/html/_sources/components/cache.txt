@@ -1,0 +1,5 @@
+.. Slick cache component
+
+Cache
+=====
+
