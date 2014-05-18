@@ -25,6 +25,35 @@ Features
 
 Installation
 ------------
+The best way to get started with Slick framework is using composer. We have created a template that get you with a base web application files and directory structure.
+To start a project using our web application template run
+
+.. code-block:: bash
+
+    $ composer create-project slick/webapp <your-app-name>
+
+If you wat to use a Slick module in your existing project just add the corespondent module name your project ``composer.json`` file.
+Lets have an example. Adding the ``slick/template`` Slick module to your project is as simple as adding the following line to your project's ``composer.json`` file:
+
+.. code-block:: json
+    :emphasize-lines: 3
+
+        {
+            "require": {
+                "slick/template": "1.0.*@dev",
+                ...
+            }
+        }
+
+
+Then you need to run:
+
+.. code-block:: bash
+
+    $ composer update
+
+to be able to add the specified library to your vendor directory.
+
 
 Contribute
 ----------

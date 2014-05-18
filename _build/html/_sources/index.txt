@@ -25,6 +25,35 @@ Features
 
 Installation
 ------------
+The best way to get started with Slick framework is using composer. We have created a template that get you with a base web application files and directory structure.
+To start a project using our web application template run
+
+.. code-block:: bash
+
+    $ composer create-project slick/webapp <your-app-name>
+
+If you wat to use a Slick module in your existing project just add the corespondent module name your project ``composer.json`` file.
+Lets have an example. Adding the ``slick/template`` Slick module to your project is as simple as adding the following line to your project's ``composer.json`` file:
+
+.. code-block:: json
+    :emphasize-lines: 3
+
+        {
+            "require": {
+                "slick/template": "1.0.*@dev",
+                ...
+            }
+        }
+
+
+Then you need to run:
+
+.. code-block:: bash
+
+    $ composer update
+
+to be able to add the specified library to your vendor directory.
+
 
 Contribute
 ----------
@@ -40,27 +69,7 @@ If you are having issues, please let us know.
 License
 -------
 
-The MIT License (MIT)
-
-Copyright (c) 2014 Slick Framework
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the "Software"), to deal in
-the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-the Software, and to permit persons to whom the Software is furnished to do so,
-subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
+The project is licensed under the MIT License (MIT)
 
 .. toctree::
    :maxdepth: 3
