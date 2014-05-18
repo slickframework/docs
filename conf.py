@@ -14,7 +14,7 @@
 
 import sys
 import os
-import sphinx_rtd_ee
+#import sphinx_rtd_ee
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
