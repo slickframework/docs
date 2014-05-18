@@ -3,8 +3,6 @@
 Cache
 =====
 
-Overview
---------
 Slick cache component deals with cache providing services installed on your system.
 
 I comes with support for *Memcached* (``memcached`` daemon) and *File* (caching data into files) out of the box,

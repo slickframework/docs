@@ -1,0 +1,304 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Common library &mdash; Slick Framework 1.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Slick Framework 1.0.0 documentation" href="../index.html" />
+    <link rel="up" title="Components" href="index.html" />
+    <link rel="prev" title="Cache" href="cache.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="cache.html" title="Cache"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Slick Framework 1.0.0 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Components</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="common-library">
+<h1>Common library<a class="headerlink" href="#common-library" title="Permalink to this headline">¶</a></h1>
+<p>Common library is a set of useful classes and traits that are in almost every class
+in the entire Slick framework. They form a solid base to develop on top of and help
+you remove the tedious work of create getters, setters, allow read end or write access
+to the properties and inspect classes and properties.</p>
+<div class="section" id="understanding-the-base-class">
+<h2>Understanding the &#8220;Base&#8221; class<a class="headerlink" href="#understanding-the-base-class" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">Slick\Common\Base</span></tt> class is one of the most important classes of Slick. It is responsible for the
+&#8220;magic&#8221; in classes that extends it. It is very important that you have a clear understanding of what
+this class does to really speed up your development.</p>
+<div class="section" id="defining-class-properties">
+<h3>Defining class properties<a class="headerlink" href="#defining-class-properties" title="Permalink to this headline">¶</a></h3>
+<p>When defining properties in classes that extend <tt class="docutils literal"><span class="pre">Slick\Common\Base</span></tt> you have to follow a simple convention:</p>
+<ul class="simple">
+<li>properties must be prefixed with an &#8220;_&#8221; (underscore);</li>
+<li>property visibility is defined as <tt class="docutils literal"><span class="pre">protected</span></tt>;</li>
+<li>property names are camel cased;</li>
+<li>use one of <tt class="docutils literal"><span class="pre">&#64;read</span></tt>, <tt class="docutils literal"><span class="pre">&#64;write</span></tt> or <tt class="docutils literal"><span class="pre">&#64;readwrite</span></tt> notations to define the public access mode to those properties.</li>
+</ul>
+<p>Lets see an example:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="k">use</span> <span class="nx">Slick\Common\Base</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">MyClass</span> <span class="k">extends</span> <span class="nx">Base</span>
+<span class="p">{</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * @readwrite</span>
+<span class="sd">     * @var string</span>
+<span class="sd">     */</span>
+    <span class="k">protected</span> <span class="nv">$_name</span><span class="p">;</span>
+
+    <span class="o">...</span>
+<span class="p">}</span>
+
+<span class="nv">$myClass</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyClass</span><span class="p">();</span>
+
+<span class="nv">$myClass</span><span class="o">-&gt;</span><span class="na">name</span> <span class="o">=</span> <span class="s2">&quot;Foo&quot;</span><span class="p">;</span>
+<span class="k">echo</span> <span class="nv">$myClass</span><span class="o">-&gt;</span><span class="na">name</span><span class="p">;</span>        <span class="c1">// This will print out &quot;Foo&quot;</span>
+</pre></div>
+</div>
+<p>As you can see in this example, defining property <tt class="docutils literal"><span class="pre">MyClass::$_name</span></tt> is in fact very simple. The <tt class="docutils literal"><span class="pre">&#64;readwrite</span></tt>
+notation says that it has read/write access to it and it is a protected property.</p>
+<p>Did you notice the way we access the <tt class="docutils literal"><span class="pre">MyClass::$_name</span></tt>? Yes, we access it as it was a <tt class="docutils literal"><span class="pre">public</span></tt> property!</p>
+<p>This is the first feature of <tt class="docutils literal"><span class="pre">Slick\Common\Base</span></tt>: to expose this properties in a <tt class="docutils literal"><span class="pre">public</span></tt> fashion
+using the PHP <tt class="docutils literal"><span class="pre">__get()</span></tt> and <tt class="docutils literal"><span class="pre">__set()</span></tt> magic methods.</p>
+<p>The notations used are defined as followed:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">&#64;read</span></tt> The property can be accessed as a read only. Any attempt to assign a value to a read only property will raise a <tt class="docutils literal"><span class="pre">Slick\Common\Exception\ReadOnlyException</span></tt> exception. This is the default behavior if no notation is provided;</li>
+<li><tt class="docutils literal"><span class="pre">&#64;write</span></tt> A value can be assigned to the property. Any attempt to read the property value will raise a <tt class="docutils literal"><span class="pre">Slick\Common\Exception\WriteOnlyException</span></tt> exception;</li>
+<li><tt class="docutils literal"><span class="pre">&#64;readwrite</span></tt> The property can be read or changed as a <tt class="docutils literal"><span class="pre">public</span></tt> property.</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This feature can be also achieved using <tt class="docutils literal"><span class="pre">private</span></tt> as visibility, however it will not work with objects
+of classes that extend the one using <tt class="docutils literal"><span class="pre">private</span></tt> visibility as it cannot be accessed by them.</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Any attempt to assign or read an undefined property on classes that extends <tt class="docutils literal"><span class="pre">Slick\Common\Base</span></tt> will
+raise a <tt class="docutils literal"><span class="pre">Slick\Common\Exception\UndefinedPropertyException</span></tt> exception. This is a great way to avoid
+dynamic change of objects.</p>
+</div>
+</div>
+<div class="section" id="getters-and-setters">
+<h3>Getters and Setters<a class="headerlink" href="#getters-and-setters" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">Slick\Common\Base</span></tt> class also has a public getter and setter for the properties defined we seen above.</p>
+<p>Consider the following example:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="k">use</span> <span class="nx">Slick\Common\Base</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">MyClass</span> <span class="k">extends</span> <span class="nx">Base</span>
+<span class="p">{</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * @readwrite</span>
+<span class="sd">     * @var string</span>
+<span class="sd">     */</span>
+    <span class="k">protected</span> <span class="nv">$_name</span><span class="p">;</span>
+
+    <span class="o">...</span>
+<span class="p">}</span>
+
+<span class="nv">$myClass</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyClass</span><span class="p">();</span>
+
+<span class="nv">$myClass</span><span class="o">-&gt;</span><span class="na">setName</span><span class="p">(</span><span class="s2">&quot;Foo&quot;</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nv">$myClass</span><span class="o">-&gt;</span><span class="na">getName</span><span class="p">();</span>      <span class="c1">// This will print out &quot;Foo&quot;</span>
+</pre></div>
+</div>
+<p>If you follow the convention you will have getters and setters for all defined properties.</p>
+<p>This is another cool feature of Base class: Expose getters and setters to all the properties using
+PHP <tt class="docutils literal"><span class="pre">__call()</span></tt> magic method.</p>
+<p>It is possible to chain calls with setters as they will always return the object they called in.
+For example:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="nv">$myClass</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyClass</span><span class="p">();</span>
+
+<span class="nv">$myClass</span><span class="o">-&gt;</span><span class="na">setName</span><span class="p">(</span><span class="s2">&quot;Bar&quot;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">getName</span><span class="p">();</span>            <span class="c1">// This will output &quot;Bar&quot;</span>
+</pre></div>
+</div>
+<p>As you can see the getter method was chained in the return of the setter as it will return the <tt class="docutils literal"><span class="pre">$myClass</span></tt> object.</p>
+</div>
+</div>
+<div class="section" id="the-setter-is-always-in-the-way">
+<h2>The setter is always in the way<a class="headerlink" href="#the-setter-is-always-in-the-way" title="Permalink to this headline">¶</a></h2>
+<p>Another benefit of extending the Base class it that you can define the way a given property gets its value
+even when you assign the value as a public property.</p>
+<p>Lest see an example:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="k">use</span> <span class="nx">Slick\Common\Base</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">MyClass</span> <span class="k">extends</span> <span class="nx">Base</span>
+<span class="p">{</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * @readwrite</span>
+<span class="sd">     * @var string</span>
+<span class="sd">     */</span>
+    <span class="k">protected</span> <span class="nv">$_name</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">setName</span><span class="p">(</span><span class="nv">$name</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">_name</span> <span class="o">=</span> <span class="nx">strtoupper</span><span class="p">(</span><span class="nv">$name</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nv">$myClass</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyClass</span><span class="p">();</span>
+
+<span class="nv">$myClass</span><span class="o">-&gt;</span><span class="na">name</span> <span class="o">=</span> <span class="s2">&quot;Foo Bar&quot;</span><span class="p">;</span>
+<span class="k">echo</span> <span class="nv">$myClass</span><span class="o">-&gt;</span><span class="na">getName</span><span class="p">();</span>   <span class="c1">// This will print out FOO BAR</span>
+</pre></div>
+</div>
+<p>In the code above we define the <tt class="docutils literal"><span class="pre">MyClass::setName()</span></tt> method and as you can see by assign a value to the
+name property the setName() method is always called.
+This is a good way of doing &#8220;lazy load&#8221; of properties and ensure that even if you use the property instead of
+the method the same behavior is performed.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In the above example we add the <tt class="docutils literal"><span class="pre">return</span> <span class="pre">$this;</span></tt> line to maintain the same behavior of the setters
+as it is defined by Base class. If you don&#8217;t put that line as the setter return you will no longer
+be able to chain other method calls.</p>
+</div>
+</div>
+<div class="section" id="easy-construction">
+<h2>Easy construction<a class="headerlink" href="#easy-construction" title="Permalink to this headline">¶</a></h2>
+<p>When creating an object you will probably need to set some properties before you use that object. The way of
+doing this is by adding the needed parameters to the constructor or by calling the setters you need to properly
+set the state of your object before using it.</p>
+<p>But adding parameters to the constructor leads to a question of what parameters to use, in what order and will they
+have a default value? you will end up with a big, ugly constructor signature.
+Calling the the setters is more elegante but still is not as clean as i can be.</p>
+<p>The Base class has a constructor that accepts an array or object as the values for its properties.</p>
+<p>Lets see the following code:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="k">use</span> <span class="nx">Slick\Common\Base</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">MyClass</span> <span class="k">extends</span> <span class="nx">Base</span>
+<span class="p">{</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * @readwrite</span>
+<span class="sd">     * @var string</span>
+<span class="sd">     */</span>
+    <span class="k">protected</span> <span class="nv">$_name</span><span class="p">;</span>
+
+    <span class="o">...</span>
+<span class="p">}</span>
+
+<span class="nv">$myClass</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyClass</span><span class="p">([</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Foo&#39;</span><span class="p">]);</span>
+
+<span class="k">echo</span> <span class="nv">$myClass</span><span class="o">-&gt;</span><span class="na">getName</span><span class="p">();</span>      <span class="c1">// This will print out &quot;Foo&quot;</span>
+</pre></div>
+</div>
+<p>As you can see passing an array of associative key/value pairs array where keys are the property names you want to set
+when creating the object is a more elegant and flexible way of setting the object state before using it.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">If in your class you need to define a constructor always remember that you will need to call
+<tt class="docutils literal"><span class="pre">parent::__construct()</span></tt> cause it will raise an exception if you do not do so.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Common library</a><ul>
+<li><a class="reference internal" href="#understanding-the-base-class">Understanding the &#8220;Base&#8221; class</a><ul>
+<li><a class="reference internal" href="#defining-class-properties">Defining class properties</a></li>
+<li><a class="reference internal" href="#getters-and-setters">Getters and Setters</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-setter-is-always-in-the-way">The setter is always in the way</a></li>
+<li><a class="reference internal" href="#easy-construction">Easy construction</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="cache.html"
+                        title="previous chapter">Cache</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/components/common.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="cache.html" title="Cache"
+             >previous</a> |</li>
+        <li><a href="../index.html">Slick Framework 1.0.0 documentation</a> &raquo;</li>
+          <li><a href="index.html" >Components</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Slick Framework.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

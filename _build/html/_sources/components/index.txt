@@ -38,3 +38,4 @@ This will install the components in your vendor directory.
     :maxdepth: 2
 
     cache
+    common
