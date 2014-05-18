@@ -49,6 +49,137 @@
             
   <div class="section" id="cache">
 <h1>Cache<a class="headerlink" href="#cache" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Slick cache component deals with cache providing services installed on your system.</p>
+<p>I comes with support for <em>Memcached</em> (<tt class="docutils literal"><span class="pre">memcached</span></tt> daemon) and <em>File</em> (caching data into files) out of the box,
+but it also defines a driver interface that allow you to add your own drivers to your project.</p>
+</div>
+<div class="section" id="using-a-cache-driver">
+<h2>Using a cache driver<a class="headerlink" href="#using-a-cache-driver" title="Permalink to this headline">¶</a></h2>
+<p>Using a cache driver is very easy. You simple need to call the <tt class="docutils literal"><span class="pre">Cache::get()</span></tt> static method
+to get an initialized cache driver.</p>
+<p>Lets look at the following example:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="hll"><span class="k">use</span> <span class="nx">Slick\Cache\Cache</span><span class="p">;</span>
+</span>
+<span class="k">function</span> <span class="nf">getApiData</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="hll">    <span class="nv">$cache</span> <span class="o">=</span> <span class="nx">Cache</span><span class="o">::</span><span class="na">get</span><span class="p">();</span>
+</span><span class="hll">    <span class="nv">$data</span> <span class="o">=</span> <span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span>
+</span>    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nv">$data</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nv">$data</span> <span class="o">=</span> <span class="nb">file_get_contents</span><span class="p">(</span><span class="s2">&quot;http://www.example.com/api/call.json&quot;</span><span class="p">);</span>
+<span class="hll">        <span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
+</span>    <span class="p">}</span>
+    <span class="k">return</span> <span class="nv">$data</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In this example we are using the default cache driver with default options, to store some expensive API call data.</p>
+<div class="section" id="changing-cache-expire-time">
+<h3>Changing cache expire time<a class="headerlink" href="#changing-cache-expire-time" title="Permalink to this headline">¶</a></h3>
+<p>To set the expire time for cached data you can as follows:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="k">use</span> <span class="nx">Slick\Cache\Cache</span><span class="p">;</span>
+
+<span class="k">function</span> <span class="nf">getApiData</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="nv">$cache</span> <span class="o">=</span> <span class="nx">Cache</span><span class="o">::</span><span class="na">get</span><span class="p">();</span>
+<span class="hll">    <span class="c1">// cache duration in seconds</span>
+</span><span class="hll">    <span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">duration</span> <span class="o">=</span> <span class="mi">240</span><span class="p">;</span>
+</span>    <span class="nv">$data</span> <span class="o">=</span> <span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span>
+    <span class="o">...</span>
+    <span class="k">return</span> <span class="nv">$data</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">This</span> <span class="nx">will</span> <span class="nx">set</span> <span class="nx">the</span> <span class="nx">cached</span> <span class="nx">data</span> <span class="nx">life</span> <span class="nb">time</span> <span class="k">for</span> <span class="nx">all</span> <span class="nx">the</span> <span class="nx">Driver</span><span class="o">::</span><span class="na">get</span><span class="p">()</span> <span class="nx">calls</span><span class="o">.</span>
+
+<span class="nx">You</span> <span class="nx">can</span> <span class="nx">set</span> <span class="nx">a</span> <span class="nx">per</span> <span class="nx">call</span> <span class="nx">specific</span> <span class="nx">cache</span> <span class="nx">duration</span> <span class="nx">like</span> <span class="k">this</span><span class="o">:</span>
+</pre></div>
+</div>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="k">use</span> <span class="nx">Slick\Cache\Cache</span><span class="p">;</span>
+
+<span class="k">function</span> <span class="nf">getApiData</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="nv">$cache</span> <span class="o">=</span> <span class="nx">Cache</span><span class="o">::</span><span class="na">get</span><span class="p">();</span>
+<span class="hll">    <span class="c1">// call to get data with duration</span>
+</span><span class="hll">    <span class="nv">$data</span> <span class="o">=</span> <span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="k">false</span><span class="p">,</span> <span class="mi">240</span><span class="p">);</span>
+</span>    <span class="o">...</span>
+    <span class="k">return</span> <span class="nv">$data</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="the-file-cache-driver">
+<h2>The File cache driver<a class="headerlink" href="#the-file-cache-driver" title="Permalink to this headline">¶</a></h2>
+<p>The File cache driver uses the file system to store the cached driver. So for every data key that you want
+to store in cache it will create a file with it.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Storing cache data into files is not the best way of doing cache and therefor you should consider
+using a better driver like Memcached.</p>
+<p class="last">This driver was created for those situations where you don&#8217;t have access to your server configuration
+and still want to cache <em>expensive</em> resources.</p>
+</div>
+<p>Lets look at the following example:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="k">use</span> <span class="nx">Slick\Cache\Cache</span><span class="p">;</span>
+
+<span class="k">function</span> <span class="nf">getApiData</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="hll">    <span class="nv">$cache</span> <span class="o">=</span> <span class="nx">Cache</span><span class="o">::</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;file&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;path&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;./tmp/&#39;</span><span class="p">]);</span>
+</span>    <span class="nv">$data</span> <span class="o">=</span> <span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nv">$data</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nv">$data</span> <span class="o">=</span> <span class="nb">file_get_contents</span><span class="p">(</span><span class="s2">&quot;http://www.example.com/api/call.json&quot;</span><span class="p">);</span>
+        <span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nv">$data</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">In</span> <span class="k">this</span> <span class="k">case</span> <span class="nx">we</span> <span class="nx">are</span> <span class="nx">setting</span> <span class="nx">a</span> <span class="nx">different</span> <span class="nx">path</span> <span class="nx">where</span> <span class="nx">we</span> <span class="nx">want</span> <span class="nx">to</span> <span class="nx">save</span> <span class="nx">our</span> <span class="nx">cache</span> <span class="nx">files</span><span class="o">.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="the-memcached-cache-driver">
+<h2>The Memcached cache driver<a class="headerlink" href="#the-memcached-cache-driver" title="Permalink to this headline">¶</a></h2>
+<p>The Memcached cache driver uses the <a class="reference external" href="http://www.memcached.org/">memcached</a>, an high-performance,
+distributed memory object caching system.</p>
+<p>Memcached is an in-memory key-value store for small chunks of arbitrary data (strings, objects) from
+results of database calls, API calls, or page rendering.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>You must have the Memcached PECL extension installed on your system to be able to use the
+Memcached cached diver provided by Slick.</p>
+<p class="last">If you need help on have your system installed with Memcached extention please visit the
+<a class="reference external" href="http://www.php.net/manual/en/memcached.installation.php">PHP Memcacded manual page</a> for
+more information.</p>
+</div>
+<p>To use this driver, as we already saw before, you need to call the Cache::get() static method
+and pass the driver name and options.</p>
+<p>The following example illustrates a possible way of doing it:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="k">use</span> <span class="nx">Slick\Cache\Cache</span><span class="p">;</span>
+
+<span class="nv">$cache</span> <span class="o">=</span> <span class="nx">Cache</span><span class="o">::</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;memcached&#39;</span><span class="p">,</span> <span class="p">[</span>
+    <span class="s1">&#39;host&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;0.0.0.0&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;port&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;11211&#39;</span><span class="p">,</span>
+<span class="hll">    <span class="s1">&#39;duration&#39;</span> <span class="o">=&gt;</span> <span class="mi">300</span> <span class="c1">// 5 minutes</span>
+</span><span class="p">]);</span>
+
+<span class="o">...</span>
+</pre></div>
+</div>
+<p>Here we pass the host and port of the memcached daemon for PHP Memcache to connect.</p>
+<p>If you were paying attention to the last code block you will notice that we add the <tt class="docutils literal"><span class="pre">duration</span></tt> param
+to the diver initialization. It is possible to do that on all cache drivers.</p>
+</div>
 </div>
 
 
@@ -57,6 +188,20 @@
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Cache</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#using-a-cache-driver">Using a cache driver</a><ul>
+<li><a class="reference internal" href="#changing-cache-expire-time">Changing cache expire time</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-file-cache-driver">The File cache driver</a></li>
+<li><a class="reference internal" href="#the-memcached-cache-driver">The Memcached cache driver</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="index.html"
                         title="previous chapter">Components</a></p>
