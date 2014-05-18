@@ -130,7 +130,7 @@ For example:
 As you can see the getter method was chained in the return of the setter as it will return the ``$myClass`` object.
 
 The setter is always in the way
--------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Another benefit of extending the Base class it that you can define the way a given property gets its value
 even when you assign the value as a public property.
@@ -176,7 +176,7 @@ the method the same behavior is performed.
     be able to chain other method calls.
 
 Easy construction
------------------
+~~~~~~~~~~~~~~~~~
 
 When creating an object you will probably need to set some properties before you use that object. The way of
 doing this is by adding the needed parameters to the constructor or by calling the setters you need to properly
@@ -219,3 +219,45 @@ when creating the object is a more elegant and flexible way of setting the objec
 
     If in your class you need to define a constructor always remember that you will need to call
     ``parent::__construct()`` cause it will raise an exception if you do not do so.
+
+Creating Singletons
+-------------------
+
+If you need to create a singleton object and have all the ``Slick\Common\Base`` behavior this Slick component
+also have a ``Slick\Common\BaseSingleton`` that implements the ``Slick\Common\SingletonInterface`` witch has
+the getInstance() method you need to define.
+
+Lets see an example:
+
+.. code-block:: php
+
+    <?php
+
+    use Slick\Common\BaseSingleton;
+
+    class MyClass extends BaseSingleton
+    {
+
+        /**
+         * @readwrite
+         * @var string
+         */
+        protected $_name;
+
+        private static $_instance;
+
+        public static function getInstance($options = array())
+        {
+
+            if (is_null(static::$_instance)) {
+                static::$_instance = new Static($options);
+            }
+            return static::$_instance;
+        }
+    }
+
+    $myClass = MyClass::getInstance(['name' => 'Foo']);
+
+    echo $myClass->getName();   // This will print out "Foo"
+
+All the features are present in SingletonBase class and you only need to implement the getInstance() method.

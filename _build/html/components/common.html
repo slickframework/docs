@@ -154,9 +154,8 @@ For example:</p>
 </div>
 <p>As you can see the getter method was chained in the return of the setter as it will return the <tt class="docutils literal"><span class="pre">$myClass</span></tt> object.</p>
 </div>
-</div>
 <div class="section" id="the-setter-is-always-in-the-way">
-<h2>The setter is always in the way<a class="headerlink" href="#the-setter-is-always-in-the-way" title="Permalink to this headline">¶</a></h2>
+<h3>The setter is always in the way<a class="headerlink" href="#the-setter-is-always-in-the-way" title="Permalink to this headline">¶</a></h3>
 <p>Another benefit of extending the Base class it that you can define the way a given property gets its value
 even when you assign the value as a public property.</p>
 <p>Lest see an example:</p>
@@ -198,7 +197,7 @@ be able to chain other method calls.</p>
 </div>
 </div>
 <div class="section" id="easy-construction">
-<h2>Easy construction<a class="headerlink" href="#easy-construction" title="Permalink to this headline">¶</a></h2>
+<h3>Easy construction<a class="headerlink" href="#easy-construction" title="Permalink to this headline">¶</a></h3>
 <p>When creating an object you will probably need to set some properties before you use that object. The way of
 doing this is by adding the needed parameters to the constructor or by calling the setters you need to properly
 set the state of your object before using it.</p>
@@ -237,6 +236,45 @@ when creating the object is a more elegant and flexible way of setting the objec
 </div>
 </div>
 </div>
+<div class="section" id="creating-singletons">
+<h2>Creating Singletons<a class="headerlink" href="#creating-singletons" title="Permalink to this headline">¶</a></h2>
+<p>If you need to create a singleton object and have all the <tt class="docutils literal"><span class="pre">Slick\Common\Base</span></tt> behavior this Slick component
+also have a <tt class="docutils literal"><span class="pre">Slick\Common\BaseSingleton</span></tt> that implements the <tt class="docutils literal"><span class="pre">Slick\Common\SingletonInterface</span></tt> witch has
+the getInstance() method you need to define.</p>
+<p>Lets see an example:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="k">use</span> <span class="nx">Slick\Common\BaseSingleton</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">MyClass</span> <span class="k">extends</span> <span class="nx">BaseSingleton</span>
+<span class="p">{</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * @readwrite</span>
+<span class="sd">     * @var string</span>
+<span class="sd">     */</span>
+    <span class="k">protected</span> <span class="nv">$_name</span><span class="p">;</span>
+
+    <span class="k">private</span> <span class="k">static</span> <span class="nv">$_instance</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">getInstance</span><span class="p">(</span><span class="nv">$options</span> <span class="o">=</span> <span class="k">array</span><span class="p">())</span>
+    <span class="p">{</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="nb">is_null</span><span class="p">(</span><span class="k">static</span><span class="o">::</span><span class="nv">$_instance</span><span class="p">))</span> <span class="p">{</span>
+            <span class="k">static</span><span class="o">::</span><span class="nv">$_instance</span> <span class="o">=</span> <span class="k">new</span> <span class="k">Static</span><span class="p">(</span><span class="nv">$options</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="k">static</span><span class="o">::</span><span class="nv">$_instance</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nv">$myClass</span> <span class="o">=</span> <span class="nx">MyClass</span><span class="o">::</span><span class="na">getInstance</span><span class="p">([</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Foo&#39;</span><span class="p">]);</span>
+
+<span class="k">echo</span> <span class="nv">$myClass</span><span class="o">-&gt;</span><span class="na">getName</span><span class="p">();</span>   <span class="c1">// This will print out &quot;Foo&quot;</span>
+</pre></div>
+</div>
+<p>All the features are present in SingletonBase class and you only need to implement the getInstance() method.</p>
+</div>
+</div>
 
 
           </div>
@@ -250,10 +288,11 @@ when creating the object is a more elegant and flexible way of setting the objec
 <li><a class="reference internal" href="#understanding-the-base-class">Understanding the &#8220;Base&#8221; class</a><ul>
 <li><a class="reference internal" href="#defining-class-properties">Defining class properties</a></li>
 <li><a class="reference internal" href="#getters-and-setters">Getters and Setters</a></li>
-</ul>
-</li>
 <li><a class="reference internal" href="#the-setter-is-always-in-the-way">The setter is always in the way</a></li>
 <li><a class="reference internal" href="#easy-construction">Easy construction</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#creating-singletons">Creating Singletons</a></li>
 </ul>
 </li>
 </ul>
