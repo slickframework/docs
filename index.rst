@@ -71,7 +71,6 @@ License
 The project is licensed under the MIT License (MIT)
 
 .. toctree::
-   :maxdepth: 3
+    :maxdepth: 3
 
-
-
+    components/index

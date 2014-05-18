@@ -36,14 +36,13 @@ If you wat to use a Slick module in your existing project just add the corespond
 Lets have an example. Adding the ``slick/template`` Slick module to your project is as simple as adding the following line to your project's ``composer.json`` file:
 
 .. code-block:: json
-    :emphasize-lines: 3
 
-        {
-            "require": {
-                "slick/template": "1.0.*@dev",
-                ...
-            }
+    {
+        "require": {
+            "slick/template": "1.0.*@dev",
+            ...
         }
+    }
 
 
 Then you need to run:
@@ -72,7 +71,6 @@ License
 The project is licensed under the MIT License (MIT)
 
 .. toctree::
-   :maxdepth: 3
+    :maxdepth: 3
 
-
-
+    components/index
