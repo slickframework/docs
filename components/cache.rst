@@ -1,7 +1,7 @@
 .. Slick cache component
 
 Cache
-=====
+*****
 
 Slick cache component deals with cache providing services installed on your system.
 
@@ -9,7 +9,7 @@ I comes with support for *Memcached* (``memcached`` daemon) and *File* (caching 
 but it also defines a driver interface that allow you to add your own drivers to your project.
 
 Using a cache driver
---------------------
+====================
 Using a cache driver is very easy. You simple need to call the ``Cache::get()`` static method
 to get an initialized cache driver.
 
@@ -36,7 +36,7 @@ Lets look at the following example:
 In this example we are using the default cache driver with default options, to store some expensive API call data.
 
 Changing cache expire time
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+""""""""""""""""""""""""""
 To set the expire time for cached data you can as follows:
 
 .. code-block:: php

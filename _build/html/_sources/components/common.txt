@@ -1,24 +1,20 @@
 .. Common library
 
 Common library
-==============
-
+**************
 Common library is a set of useful classes and traits that are in almost every class
 in the entire Slick framework. They form a solid base to develop on top of and help
 you remove the tedious work of create getters, setters, allow read end or write access
 to the properties and inspect classes and properties.
 
-
 Understanding the "Base" class
-------------------------------
-
+==============================
 The ``Slick\Common\Base`` class is one of the most important classes of Slick. It is responsible for the
 "magic" in classes that extends it. It is very important that you have a clear understanding of what
 this class does to really speed up your development.
 
 Defining class properties
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
+"""""""""""""""""""""""""
 When defining properties in classes that extend ``Slick\Common\Base`` you have to follow a simple convention:
 
 - properties must be prefixed with an "_" (underscore);
@@ -80,8 +76,7 @@ The notations used are defined as followed:
 
 
 Getters and Setters
-~~~~~~~~~~~~~~~~~~~
-
+"""""""""""""""""""
 ``Slick\Common\Base`` class also has a public getter and setter for the properties defined we seen above.
 
 Consider the following example:
@@ -130,8 +125,7 @@ For example:
 As you can see the getter method was chained in the return of the setter as it will return the ``$myClass`` object.
 
 The setter is always in the way
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+"""""""""""""""""""""""""""""""
 Another benefit of extending the Base class it that you can define the way a given property gets its value
 even when you assign the value as a public property.
 
@@ -176,8 +170,7 @@ the method the same behavior is performed.
     be able to chain other method calls.
 
 Easy construction
-~~~~~~~~~~~~~~~~~
-
+"""""""""""""""""
 When creating an object you will probably need to set some properties before you use that object. The way of
 doing this is by adding the needed parameters to the constructor or by calling the setters you need to properly
 set the state of your object before using it.
@@ -221,8 +214,7 @@ when creating the object is a more elegant and flexible way of setting the objec
     ``parent::__construct()`` cause it will raise an exception if you do not do so.
 
 Creating Singletons
--------------------
-
+===================
 If you need to create a singleton object and have all the ``Slick\Common\Base`` behavior this Slick component
 also have a ``Slick\Common\BaseSingleton`` that implements the ``Slick\Common\SingletonInterface`` witch has
 the getInstance() method you need to define.

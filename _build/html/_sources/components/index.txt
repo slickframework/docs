@@ -1,5 +1,6 @@
 .. Slick components land page
 
+==========
 Components
 ==========
 
@@ -9,8 +10,8 @@ components will be downloaded and installed.
 
 In this section we will cover all Slick modules separately.
 
-**Installing a module**
-
+Installing a module
+"""""""""""""""""""
 
 Lets assume the you want to use the ``slick/template`` and ``slick/configuration`` components in your project.
 Your project's ``composer.json`` will need to have the following entries:
@@ -32,7 +33,8 @@ After updating your ``composer.json`` file you will need to run the following co
 
 This will install the components in your vendor directory.
 
-**Slick components**
+Slick components
+""""""""""""""""
 
 .. toctree::
     :maxdepth: 2
