@@ -124,8 +124,8 @@ For example:
 
 As you can see the getter method was chained in the return of the setter as it will return the ``$myClass`` object.
 
-The setter is always in the way
-"""""""""""""""""""""""""""""""
+The setter/getter is always in the way
+""""""""""""""""""""""""""""""""""""""
 Another benefit of extending the Base class it that you can define the way a given property gets its value
 even when you assign the value as a public property.
 
@@ -151,6 +151,14 @@ Lest see an example:
             $this->_name = strtoupper($name);
             return $this;
         }
+
+        public function getName()
+        {
+            if (is_null($this->_name)) {
+                $this->_name = "No Name";
+            }
+            return $this->_name;
+        }
     }
 
     $myClass = new MyClass();
@@ -160,8 +168,12 @@ Lest see an example:
 
 In the code above we define the ``MyClass::setName()`` method and as you can see by assign a value to the
 name property the setName() method is always called.
-This is a good way of doing "lazy load" of properties and ensure that even if you use the property instead of
-the method the same behavior is performed.
+
+In the same way, the ``MyClass::getName()`` is always called when you retrieve the property value.
+
+This is in fact a good way of doing "lazy load" of expensive properties and ensure that even if you call the
+property the method and behavior are always the same.
+
 
 .. note::
 

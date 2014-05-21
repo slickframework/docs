@@ -52,7 +52,7 @@
 <p>Dependency injection and dependency injection containers are tow different things. Dependency injection is a way
 of doing better code as you can read in this Fabien Pontencier&#8217;s
 <a class="reference external" href="http://fabien.potencier.org/article/11/what-is-dependency-injection">article about dependency injection</a>.
-In other hand <em>Dependency Injection Container</em> is a tool that will help you injection dependencies.</p>
+In other hand <em>Dependency Injection Container</em> is a tool that will help you injectic dependencies.</p>
 <p>This component for Slick is a very simple library where you can define dependencies and have them injected
 in your object as you call for them.</p>
 <p><strong>Installation</strong></p>
@@ -82,7 +82,7 @@ as a <em>registry</em> component storing all your values where you can reuse the
 <p>As you can see this is the simplest way of defining a value to be stored as <tt class="docutils literal"><span class="pre">myValue</span></tt> in the container
 you will create.</p>
 <p><strong>Factory definition</strong></p>
-<p>A callable definition is used when you want to calculate the value when you call the container for that
+<p>A callable or <em>Factory</em> definition is used when you want to calculate the value when you call the container for that
 definition. You need to define a callable or clojure for this definition.</p>
 <p>Lets see an example:</p>
 <div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
@@ -96,6 +96,131 @@ definition. You need to define a callable or clojure for this definition.</p>
 </div>
 <p>Here we use a factory or helper class <tt class="docutils literal"><span class="pre">\Slick\Di\Definition</span></tt> witch will create the container definition
 for you. The factory method expects a callable or clojure, as we set in this example.</p>
+<p><strong>Object definition</strong></p>
+<p>This is the most flexible and powerful of all definitions. Object definitions does what its name states for:
+define an object creation.</p>
+<p>See the following code:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="k">return</span> <span class="p">[</span>
+    <span class="s1">&#39;myCoolObject&#39;</span> <span class="o">=&gt;</span> <span class="nx">\Slick\Di\Definition</span><span class="o">::</span><span class="na">object</span><span class="p">(</span><span class="s1">&#39;MyNamespace\MyCoolClass&#39;</span><span class="p">)</span>
+        <span class="o">-&gt;</span><span class="na">constructor</span><span class="p">([</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Foo&#39;</span><span class="p">])</span>
+        <span class="o">-&gt;</span><span class="na">property</span><span class="p">(</span><span class="s1">&#39;isActive&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">)</span>
+        <span class="o">-&gt;</span><span class="na">method</span><span class="p">(</span><span class="s1">&#39;startCode&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;some&#39;</span><span class="p">,</span> <span class="s1">&#39;code&#39;</span><span class="p">])</span>
+<span class="p">];</span>
+</pre></div>
+</div>
+<p>You have all you need to instantiate, set properties and call methods of an object that will be created
+when you call <tt class="docutils literal"><span class="pre">Slick\Di\Container::get()</span></tt> method.
+The helper is very verbose:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">Slick\Di\Definition\Helper\ObjectDefinitionHelper::constructor()</span></tt>: used to set the list of parameters
+you want to pass to the constructor on object creation.</li>
+<li><tt class="docutils literal"><span class="pre">Slick\Di\Definition\Helper\ObjectDefinitionHelper::property()</span></tt>: used to set property values after object creation</li>
+<li><tt class="docutils literal"><span class="pre">Slick\Di\Definition\Helper\ObjectDefinitionHelper::method()</span></tt>: used to call specific methods after object creation.</li>
+</ul>
+<p>Its likely that you can use almost every object with this definition.</p>
+<p><strong>Link definition</strong></p>
+<p>This is avery helpful definition. If you already have a definition in place and you want to access it with
+other name you only need to create a link.</p>
+<p>Lets see:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="k">return</span> <span class="p">[</span>
+    <span class="s1">&#39;myObject&#39;</span> <span class="o">=&gt;</span> <span class="nx">\Slick\Di\Definition</span><span class="o">::</span><span class="na">link</span><span class="p">(</span><span class="s1">&#39;myCoolObject&#39;</span><span class="p">);</span>
+<span class="p">];</span>
+</pre></div>
+</div>
+<p>Now if you call Container::get(&#8220;myObject&#8221;) the same object of &#8220;myCoolObject&#8221; will be returned.</p>
+</div>
+<div class="section" id="using-dependency-container">
+<h2>Using dependency container<a class="headerlink" href="#using-dependency-container" title="Permalink to this headline">¶</a></h2>
+<p>Now that we have our definitions in place, lets use them. You will need to create a container and
+pass the definitions to it.</p>
+<p>Lets see a full example:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="k">return</span> <span class="p">[</span>
+    <span class="s1">&#39;myValue&#39;</span> <span class="o">=&gt;</span> <span class="mi">1024</span><span class="p">,</span>
+    <span class="s1">&#39;myObject&#39;</span> <span class="o">=&gt;</span> <span class="nx">\Slick\Di\Definition</span><span class="o">::</span><span class="na">link</span><span class="p">(</span><span class="s1">&#39;myCoolObject&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;myCalculatedValue&#39;</span> <span class="o">=&gt;</span> <span class="nx">\Slick\Di\Definition</span><span class="o">::</span><span class="na">factory</span><span class="p">(</span><span class="k">function</span><span class="p">(){</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nx">\DateTime</span><span class="p">(</span><span class="s2">&quot;now&quot;</span><span class="p">,</span> <span class="k">new</span> <span class="nx">\DateTimeZone</span><span class="p">(</span><span class="s1">&#39;UTC&#39;</span><span class="p">));</span>
+    <span class="p">}),</span>
+    <span class="s1">&#39;myCoolObject&#39;</span> <span class="o">=&gt;</span> <span class="nx">\Slick\Di\Definition</span><span class="o">::</span><span class="na">object</span><span class="p">(</span><span class="s1">&#39;MyNamespace\MyCoolClass&#39;</span><span class="p">)</span>
+        <span class="o">-&gt;</span><span class="na">constructor</span><span class="p">([</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Foo&#39;</span><span class="p">])</span>
+        <span class="o">-&gt;</span><span class="na">property</span><span class="p">(</span><span class="s1">&#39;isActive&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">)</span>
+        <span class="o">-&gt;</span><span class="na">method</span><span class="p">(</span><span class="s1">&#39;startCode&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;some&#39;</span><span class="p">,</span> <span class="s1">&#39;code&#39;</span><span class="p">])</span>
+<span class="p">];</span>
+</pre></div>
+</div>
+<p>Lets assume that the above code is in a file called <tt class="docutils literal"><span class="pre">definition.php</span></tt> lets create the container:</p>
+<div class="highlight-php"><div class="highlight"><pre>&lt;?php
+
+use SLick\Di\ContainerBuilder;
+
+$definitions = include(&#39;definition.php&#39;);
+$container = ContainerBuilder::build($definitions);
+
+// Now lets use our container to get a new myCoolObject
+$object = $container-&gt;get(&#39;myCoolObject);
+</pre></div>
+</div>
+<p>Now we have a full working container fed with our definitions ready to be used.</p>
+</div>
+<div class="section" id="object-scope">
+<h2>Object scope<a class="headerlink" href="#object-scope" title="Permalink to this headline">¶</a></h2>
+<p>When defining your dependencies you can se the scope of the object:</p>
+<ul class="simple">
+<li><strong>Singleton</strong>: The object will be instantiated just once (the first time you call it) and then will be reused
+every time you call it from your container;</li>
+<li><strong>Prototype</strong>: The object will be instanciated every time you call it from your container.</li>
+</ul>
+<p>All the definitions you use have a default scope. See the table bellow fo details</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="27%" />
+<col width="17%" />
+<col width="15%" />
+<col width="22%" />
+<col width="20%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>&nbsp;</td>
+<td>Value</td>
+<td>link</td>
+<td>factory</td>
+<td>object</td>
+</tr>
+<tr class="row-even"><td>Singleton</td>
+<td>X</td>
+<td>&nbsp;</td>
+<td>X</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>Prototype</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>X</td>
+</tr>
+</tbody>
+</table>
+<p>The container has a static property that is used to store those values and is the container that
+uses the scope to determine if a new object is to be created or not.</p>
+<p>Nevertheless you can call <tt class="docutils literal"><span class="pre">Container::make()</span></tt> witch forces the scope to be prototype.</p>
+<p>You cal also set the scope when you define your injection by using the method <tt class="docutils literal"><span class="pre">DefinitionHelper::scope()</span></tt>
+and passing the scope you want along with it. See the example bellow:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="k">return</span> <span class="p">[</span>
+    <span class="s1">&#39;myCoolObject&#39;</span> <span class="o">=&gt;</span> <span class="nx">\Slick\Di\Definition</span><span class="o">::</span><span class="na">object</span><span class="p">(</span><span class="s1">&#39;MyNamespace\MyCoolClass&#39;</span><span class="p">)</span>
+        <span class="o">-&gt;</span><span class="na">constructor</span><span class="p">([</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Foo&#39;</span><span class="p">])</span>
+        <span class="o">-&gt;</span><span class="na">property</span><span class="p">(</span><span class="s1">&#39;isActive&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">)</span>
+        <span class="o">-&gt;</span><span class="na">method</span><span class="p">(</span><span class="s1">&#39;startCode&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;some&#39;</span><span class="p">,</span> <span class="s1">&#39;code&#39;</span><span class="p">])</span>
+        <span class="o">-&gt;</span><span class="na">scope</span><span class="p">(</span><span class="nx">\Slick\Di\Definition\Scope</span><span class="o">::</span><span class="na">PROTOTYPE</span><span class="p">())</span>
+<span class="p">];</span>
+</pre></div>
+</div>
 </div>
 </div>
 
@@ -109,6 +234,8 @@ for you. The factory method expects a callable or clojure, as we set in this exa
   <ul>
 <li><a class="reference internal" href="#">Dependency Injection Container</a><ul>
 <li><a class="reference internal" href="#defining-injections">Defining injections</a></li>
+<li><a class="reference internal" href="#using-dependency-container">Using dependency container</a></li>
+<li><a class="reference internal" href="#object-scope">Object scope</a></li>
 </ul>
 </li>
 </ul>

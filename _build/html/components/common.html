@@ -158,8 +158,8 @@ For example:</p>
 </div>
 <p>As you can see the getter method was chained in the return of the setter as it will return the <tt class="docutils literal"><span class="pre">$myClass</span></tt> object.</p>
 </div>
-<div class="section" id="the-setter-is-always-in-the-way">
-<h3>The setter is always in the way<a class="headerlink" href="#the-setter-is-always-in-the-way" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="the-setter-getter-is-always-in-the-way">
+<h3>The setter/getter is always in the way<a class="headerlink" href="#the-setter-getter-is-always-in-the-way" title="Permalink to this headline">¶</a></h3>
 <p>Another benefit of extending the Base class it that you can define the way a given property gets its value
 even when you assign the value as a public property.</p>
 <p>Lest see an example:</p>
@@ -181,6 +181,14 @@ even when you assign the value as a public property.</p>
         <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">_name</span> <span class="o">=</span> <span class="nx">strtoupper</span><span class="p">(</span><span class="nv">$name</span><span class="p">);</span>
         <span class="k">return</span> <span class="nv">$this</span><span class="p">;</span>
     <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getName</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">is_null</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">_name</span><span class="p">))</span> <span class="p">{</span>
+            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">_name</span> <span class="o">=</span> <span class="s2">&quot;No Name&quot;</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">_name</span><span class="p">;</span>
+    <span class="p">}</span>
 <span class="p">}</span>
 
 <span class="nv">$myClass</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyClass</span><span class="p">();</span>
@@ -190,9 +198,10 @@ even when you assign the value as a public property.</p>
 </pre></div>
 </div>
 <p>In the code above we define the <tt class="docutils literal"><span class="pre">MyClass::setName()</span></tt> method and as you can see by assign a value to the
-name property the setName() method is always called.
-This is a good way of doing &#8220;lazy load&#8221; of properties and ensure that even if you use the property instead of
-the method the same behavior is performed.</p>
+name property the setName() method is always called.</p>
+<p>In the same way, the <tt class="docutils literal"><span class="pre">MyClass::getName()</span></tt> is always called when you retrieve the property value.</p>
+<p>This is in fact a good way of doing &#8220;lazy load&#8221; of expensive properties and ensure that even if you call the
+property the method and behavior are always the same.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">In the above example we add the <tt class="docutils literal"><span class="pre">return</span> <span class="pre">$this;</span></tt> line to maintain the same behavior of the setters
@@ -292,7 +301,7 @@ the getInstance() method you need to define.</p>
 <li><a class="reference internal" href="#understanding-the-base-class">Understanding the &#8220;Base&#8221; class</a><ul>
 <li><a class="reference internal" href="#defining-class-properties">Defining class properties</a></li>
 <li><a class="reference internal" href="#getters-and-setters">Getters and Setters</a></li>
-<li><a class="reference internal" href="#the-setter-is-always-in-the-way">The setter is always in the way</a></li>
+<li><a class="reference internal" href="#the-setter-getter-is-always-in-the-way">The setter/getter is always in the way</a></li>
 <li><a class="reference internal" href="#easy-construction">Easy construction</a></li>
 </ul>
 </li>
