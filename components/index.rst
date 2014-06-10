@@ -39,3 +39,4 @@ This will install the components in your vendor directory.
     cache
     common
     dependency
+    template

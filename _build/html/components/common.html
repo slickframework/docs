@@ -69,16 +69,13 @@ this class does to really speed up your development.</p>
 <li>properties must be prefixed with an &#8220;_&#8221; (underscore);</li>
 <li>property visibility is defined as <tt class="docutils literal"><span class="pre">protected</span></tt>;</li>
 <li>property names are camel cased;</li>
-<li>use one of <tt class="docutils literal"><span class="pre">&#64;read</span></tt>, <tt class="docutils literal"><span class="pre">&#64;write</span></tt> or <tt class="docutils literal"><span class="pre">&#64;readwrite</span></tt> notations to define the public access mode to those properties.</li>
+<li>use one of <tt class="docutils literal"><span class="pre">&#64;read</span></tt>, <tt class="docutils literal"><span class="pre">&#64;write</span></tt> or <tt class="docutils literal"><span class="pre">&#64;readwrite</span></tt> annotations to define the public access mode to those properties.</li>
 </ul>
 <p>Lets see an example:</p>
 <div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
-
 <span class="k">use</span> <span class="nx">Slick\Common\Base</span><span class="p">;</span>
-
 <span class="k">class</span> <span class="nc">MyClass</span> <span class="k">extends</span> <span class="nx">Base</span>
 <span class="p">{</span>
-
     <span class="sd">/**</span>
 <span class="sd">     * @readwrite</span>
 <span class="sd">     * @var string</span>
@@ -89,19 +86,18 @@ this class does to really speed up your development.</p>
 <span class="p">}</span>
 
 <span class="nv">$myClass</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyClass</span><span class="p">();</span>
-
 <span class="nv">$myClass</span><span class="o">-&gt;</span><span class="na">name</span> <span class="o">=</span> <span class="s2">&quot;Foo&quot;</span><span class="p">;</span>
 <span class="k">echo</span> <span class="nv">$myClass</span><span class="o">-&gt;</span><span class="na">name</span><span class="p">;</span>        <span class="c1">// This will print out &quot;Foo&quot;</span>
 </pre></div>
 </div>
 <p>As you can see in this example, defining property <tt class="docutils literal"><span class="pre">MyClass::$_name</span></tt> is in fact very simple. The <tt class="docutils literal"><span class="pre">&#64;readwrite</span></tt>
-notation says that it has read/write access to it and it is a protected property.</p>
+annotation grants read and write access to it and it is a protected property.</p>
 <p>Did you notice the way we access the <tt class="docutils literal"><span class="pre">MyClass::$_name</span></tt>? Yes, we access it as it was a <tt class="docutils literal"><span class="pre">public</span></tt> property!</p>
 <p>This is the first feature of <tt class="docutils literal"><span class="pre">Slick\Common\Base</span></tt>: to expose this properties in a <tt class="docutils literal"><span class="pre">public</span></tt> fashion
 using the PHP <tt class="docutils literal"><span class="pre">__get()</span></tt> and <tt class="docutils literal"><span class="pre">__set()</span></tt> magic methods.</p>
-<p>The notations used are defined as followed:</p>
+<p>The annotations used are defined as followed:</p>
 <ul class="simple">
-<li><tt class="docutils literal"><span class="pre">&#64;read</span></tt> The property can be accessed as a read only. Any attempt to assign a value to a read only property will raise a <tt class="docutils literal"><span class="pre">Slick\Common\Exception\ReadOnlyException</span></tt> exception. This is the default behavior if no notation is provided;</li>
+<li><tt class="docutils literal"><span class="pre">&#64;read</span></tt> The property can be accessed as a read only. Any attempt to assign a value to a read only property will raise a <tt class="docutils literal"><span class="pre">Slick\Common\Exception\ReadOnlyException</span></tt> exception. This is the default behavior if no annotation is provided;</li>
 <li><tt class="docutils literal"><span class="pre">&#64;write</span></tt> A value can be assigned to the property. Any attempt to read the property value will raise a <tt class="docutils literal"><span class="pre">Slick\Common\Exception\WriteOnlyException</span></tt> exception;</li>
 <li><tt class="docutils literal"><span class="pre">&#64;readwrite</span></tt> The property can be read or changed as a <tt class="docutils literal"><span class="pre">public</span></tt> property.</li>
 </ul>
@@ -122,12 +118,9 @@ dynamic change of objects.</p>
 <p><tt class="docutils literal"><span class="pre">Slick\Common\Base</span></tt> class also has a public getter and setter for the properties defined we seen above.</p>
 <p>Consider the following example:</p>
 <div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
-
 <span class="k">use</span> <span class="nx">Slick\Common\Base</span><span class="p">;</span>
-
 <span class="k">class</span> <span class="nc">MyClass</span> <span class="k">extends</span> <span class="nx">Base</span>
 <span class="p">{</span>
-
     <span class="sd">/**</span>
 <span class="sd">     * @readwrite</span>
 <span class="sd">     * @var string</span>
@@ -138,7 +131,6 @@ dynamic change of objects.</p>
 <span class="p">}</span>
 
 <span class="nv">$myClass</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyClass</span><span class="p">();</span>
-
 <span class="nv">$myClass</span><span class="o">-&gt;</span><span class="na">setName</span><span class="p">(</span><span class="s2">&quot;Foo&quot;</span><span class="p">);</span>
 <span class="k">echo</span> <span class="nv">$myClass</span><span class="o">-&gt;</span><span class="na">getName</span><span class="p">();</span>      <span class="c1">// This will print out &quot;Foo&quot;</span>
 </pre></div>
@@ -149,9 +141,7 @@ PHP <tt class="docutils literal"><span class="pre">__call()</span></tt> magic me
 <p>It is possible to chain calls with setters as they will always return the object they called in.
 For example:</p>
 <div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
-
 <span class="nv">$myClass</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyClass</span><span class="p">();</span>
-
 <span class="nv">$myClass</span><span class="o">-&gt;</span><span class="na">setName</span><span class="p">(</span><span class="s2">&quot;Bar&quot;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">getName</span><span class="p">();</span>            <span class="c1">// This will output &quot;Bar&quot;</span>
 </pre></div>
@@ -164,12 +154,9 @@ For example:</p>
 even when you assign the value as a public property.</p>
 <p>Lest see an example:</p>
 <div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
-
 <span class="k">use</span> <span class="nx">Slick\Common\Base</span><span class="p">;</span>
-
 <span class="k">class</span> <span class="nc">MyClass</span> <span class="k">extends</span> <span class="nx">Base</span>
 <span class="p">{</span>
-
     <span class="sd">/**</span>
 <span class="sd">     * @readwrite</span>
 <span class="sd">     * @var string</span>
@@ -192,7 +179,6 @@ even when you assign the value as a public property.</p>
 <span class="p">}</span>
 
 <span class="nv">$myClass</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyClass</span><span class="p">();</span>
-
 <span class="nv">$myClass</span><span class="o">-&gt;</span><span class="na">name</span> <span class="o">=</span> <span class="s2">&quot;Foo Bar&quot;</span><span class="p">;</span>
 <span class="k">echo</span> <span class="nv">$myClass</span><span class="o">-&gt;</span><span class="na">getName</span><span class="p">();</span>   <span class="c1">// This will print out FOO BAR</span>
 </pre></div>
@@ -220,12 +206,9 @@ Calling the the setters is more elegante but still is not as clean as i can be.<
 <p>The Base class has a constructor that accepts an array or object as the values for its properties.</p>
 <p>Lets see the following code:</p>
 <div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
-
 <span class="k">use</span> <span class="nx">Slick\Common\Base</span><span class="p">;</span>
-
 <span class="k">class</span> <span class="nc">MyClass</span> <span class="k">extends</span> <span class="nx">Base</span>
 <span class="p">{</span>
-
     <span class="sd">/**</span>
 <span class="sd">     * @readwrite</span>
 <span class="sd">     * @var string</span>
@@ -236,11 +219,10 @@ Calling the the setters is more elegante but still is not as clean as i can be.<
 <span class="p">}</span>
 
 <span class="nv">$myClass</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyClass</span><span class="p">([</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Foo&#39;</span><span class="p">]);</span>
-
 <span class="k">echo</span> <span class="nv">$myClass</span><span class="o">-&gt;</span><span class="na">getName</span><span class="p">();</span>      <span class="c1">// This will print out &quot;Foo&quot;</span>
 </pre></div>
 </div>
-<p>As you can see passing an array of associative key/value pairs array where keys are the property names you want to set
+<p>As you can see passing an array of associative key/value pairs where keys are the property names you want to set
 when creating the object is a more elegant and flexible way of setting the object state before using it.</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
@@ -256,12 +238,9 @@ also have a <tt class="docutils literal"><span class="pre">Slick\Common\BaseSing
 the getInstance() method you need to define.</p>
 <p>Lets see an example:</p>
 <div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
-
 <span class="k">use</span> <span class="nx">Slick\Common\BaseSingleton</span><span class="p">;</span>
-
 <span class="k">class</span> <span class="nc">MyClass</span> <span class="k">extends</span> <span class="nx">BaseSingleton</span>
 <span class="p">{</span>
-
     <span class="sd">/**</span>
 <span class="sd">     * @readwrite</span>
 <span class="sd">     * @var string</span>
@@ -272,7 +251,6 @@ the getInstance() method you need to define.</p>
 
     <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">getInstance</span><span class="p">(</span><span class="nv">$options</span> <span class="o">=</span> <span class="k">array</span><span class="p">())</span>
     <span class="p">{</span>
-
         <span class="k">if</span> <span class="p">(</span><span class="nb">is_null</span><span class="p">(</span><span class="k">static</span><span class="o">::</span><span class="nv">$_instance</span><span class="p">))</span> <span class="p">{</span>
             <span class="k">static</span><span class="o">::</span><span class="nv">$_instance</span> <span class="o">=</span> <span class="k">new</span> <span class="k">Static</span><span class="p">(</span><span class="nv">$options</span><span class="p">);</span>
         <span class="p">}</span>
@@ -281,11 +259,234 @@ the getInstance() method you need to define.</p>
 <span class="p">}</span>
 
 <span class="nv">$myClass</span> <span class="o">=</span> <span class="nx">MyClass</span><span class="o">::</span><span class="na">getInstance</span><span class="p">([</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Foo&#39;</span><span class="p">]);</span>
-
 <span class="k">echo</span> <span class="nv">$myClass</span><span class="o">-&gt;</span><span class="na">getName</span><span class="p">();</span>   <span class="c1">// This will print out &quot;Foo&quot;</span>
 </pre></div>
 </div>
 <p>All the features are present in SingletonBase class and you only need to implement the getInstance() method.</p>
+</div>
+<div class="section" id="inspect-and-annotations">
+<h2>Inspect and Annotations<a class="headerlink" href="#inspect-and-annotations" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">Slick\Common</span></tt> component also has an <tt class="docutils literal"><span class="pre">Inspector</span></tt> utility class that can help you with class or object
+inspection and <tt class="docutils literal"><span class="pre">Annotations</span></tt> parsing. It is also possible to define custom annotations to use with your classes.
+The base class uses the <tt class="docutils literal"><span class="pre">Slick\Common\Inspector</span></tt> to determine the visibility and access to it properties.</p>
+<div class="section" id="inspect-classes-or-objects">
+<h3>Inspect classes or objects<a class="headerlink" href="#inspect-classes-or-objects" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">Slick\Common\Inspector::__construct()</span></tt> needs only an object or a full qualified class name to retrieve metadata
+from that class.</p>
+<p>Lets consider the following class:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+<span class="k">namespace</span> <span class="nx">Models</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Slick\Common\Base</span><span class="p">;</span>
+<span class="k">class</span> <span class="nc">User</span> <span class="k">extends</span> <span class="nx">Base</span>
+<span class="p">{</span>
+    <span class="sd">/**</span>
+<span class="sd">     * @readwrite</span>
+<span class="sd">     * @column type=text, size=tiny</span>
+<span class="sd">     * @var string</span>
+<span class="sd">     */</span>
+    <span class="k">protected</span> <span class="nv">$_name</span><span class="p">;</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * @readwrite</span>
+<span class="sd">     * @var string</span>
+<span class="sd">     */</span>
+    <span class="k">protected</span> <span class="nv">$_age</span><span class="p">;</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * @readwrite</span>
+<span class="sd">     * @var string</span>
+<span class="sd">     */</span>
+    <span class="k">protected</span> <span class="nv">$_active</span><span class="p">;</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * Check if age is under 18 years old</span>
+<span class="sd">     *</span>
+<span class="sd">     * @return boolean</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">isTeenager</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">_age</span> <span class="o">&lt;</span> <span class="mi">18</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Given the above class definition lets inspect its metadata with <tt class="docutils literal"><span class="pre">Inspector</span></tt>:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+<span class="k">use</span> <span class="nx">Slick\Common\Inspector</span><span class="p">;</span>
+
+<span class="nv">$inspector</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Inspector</span><span class="p">(</span><span class="s1">&#39;\Models\User&#39;</span><span class="p">);</span>
+
+<span class="c1">// Getting the list of properties</span>
+<span class="nv">$propertyList</span> <span class="o">=</span> <span class="nv">$inspector</span><span class="o">-&gt;</span><span class="na">getClassProperties</span><span class="p">();</span> <span class="c1">// [&#39;_name&#39;, &#39;_age&#39;, &#39;_active&#39;]</span>
+
+<span class="c1">// Getting the list of methods</span>
+<span class="nv">$methodList</span> <span class="o">=</span> <span class="nv">$Inspector</span><span class="o">-&gt;</span><span class="na">getClassMethods</span><span class="p">();</span> <span class="c1">// [&#39;isTeenager&#39;]</span>
+
+<span class="nv">$inspector</span><span class="o">-&gt;</span><span class="na">hasMethod</span><span class="p">(</span><span class="s1">&#39;getName&#39;</span><span class="p">);</span> <span class="c1">// FALSE</span>
+<span class="nv">$inspector</span><span class="o">-&gt;</span><span class="na">hasProperty</span><span class="p">(</span><span class="s1">&#39;_age&#39;</span><span class="p">);</span>  <span class="c1">// TRUE</span>
+</pre></div>
+</div>
+<p>Those are the simplest methods of <tt class="docutils literal"><span class="pre">Inspector</span></tt>. Just retrieve the property and method names.</p>
+</div>
+<div class="section" id="retrieve-the-annotations">
+<h3>Retrieve the annotations<a class="headerlink" href="#retrieve-the-annotations" title="Permalink to this headline">¶</a></h3>
+<p>Now we have the knowledge of what properties and and methods the class have lets retrieve the annotations
+present in the doc blocks.</p>
+<dl class="docutils">
+<dt>There hare tree methods that you can use to retrieve the annotations present in comments:</dt>
+<dd><ul class="first last simple">
+<li><strong>getClassAnnotations()</strong> Retrieves a list of annotations from the class comment block;</li>
+<li><strong>getPropertyAnnotations($property)</strong> Retrieve a list of annotations from a provided property;</li>
+<li><strong>getMethodAnnotations($method)</strong> Retrieves a list of annotations form a provided method.</li>
+</ul>
+</dd>
+</dl>
+<p>Lets see an example:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+<span class="k">use</span> <span class="nx">Slick\Common\Inspector</span><span class="p">;</span>
+
+<span class="nv">$inspector</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Inspector</span><span class="p">(</span><span class="s1">&#39;Models\User&#39;</span><span class="p">);</span>
+
+<span class="nv">$annotations</span> <span class="o">=</span> <span class="nv">$inspector</span><span class="o">-&gt;</span><span class="na">getPropertyAnnotations</span><span class="p">(</span><span class="s1">&#39;_name&#39;</span><span class="p">);</span>
+
+<span class="c1">// Annotations is an ArrayObject that contains all defined annotations of a given</span>
+<span class="c1">// comment block. In this case the comment block for _name property.</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nv">$annotations</span><span class="o">-&gt;</span><span class="na">hasAnnotation</span><span class="p">(</span><span class="s1">&#39;column&#39;</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nv">$columnAnnotation</span> <span class="o">=</span> <span class="nv">$annotations</span><span class="o">-&gt;</span><span class="na">getAnnotation</span><span class="p">(</span><span class="s1">&#39;column&#39;</span><span class="p">);</span>
+
+    <span class="nv">$columnAnnotation</span><span class="o">-&gt;</span><span class="na">getName</span><span class="p">();</span>  <span class="c1">// returns &#39;column&#39;</span>
+    <span class="nv">$columnAnnotation</span><span class="o">-&gt;</span><span class="na">getValue</span><span class="p">();</span> <span class="c1">// returns TRUE</span>
+    <span class="nv">$columnAnnotation</span><span class="o">-&gt;</span><span class="na">getParameter</span><span class="p">(</span><span class="s1">&#39;size&#39;</span><span class="p">)</span> <span class="c1">// It will have &#39;tiny&#39;</span>
+<span class="p">{</span>
+
+<span class="c1">// Check another annotation</span>
+<span class="c1">// Here you can optionally use the @ as this may seem clean in your code</span>
+<span class="k">if</span> <span class="p">(</span><span class="nv">$annotations</span><span class="o">-&gt;</span><span class="na">hasAnnotation</span><span class="p">(</span><span class="s1">&#39;@var&#39;</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nv">$var</span> <span class="o">=</span> <span class="nv">$annotations</span><span class="o">-&gt;</span><span class="na">getAnnotation</span><span class="p">(</span><span class="s1">&#39;@var&#39;</span><span class="p">);</span>
+
+    <span class="nv">$vat</span><span class="o">-&gt;</span><span class="na">getValue</span><span class="p">();</span>   <span class="c1">// This will return the &#39;string&#39; value</span>
+    <span class="c1">// if the first parameter of the annotations is a string it will be used as</span>
+    <span class="c1">// the value for that annotation.</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">If you try to get an annotation that is not in the annotations list an
+SlickCommonExceptionInvalidArgumentException will be thrown. It is very important
+that you test if the annotation exists before you retrieve it from the list.</p>
+</div>
+</div>
+<div class="section" id="annotations-parser">
+<h3>Annotations Parser<a class="headerlink" href="#annotations-parser" title="Permalink to this headline">¶</a></h3>
+<p>Annotations parse is a very simple yet versatile parser that can understand a wide range of
+annotations and translate them into list, objects, numbers, etc.</p>
+<div class="section" id="scalar-values">
+<h4>Scalar values<a class="headerlink" href="#scalar-values" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="sd">/**</span>
+<span class="sd"> * Simple strings, integers and float numbers</span>
+<span class="sd"> *</span>
+<span class="sd"> * @annotation foo=bar, baz=14, size=2.3</span>
+<span class="sd"> */</span>
+
+ <span class="nv">$annotation</span><span class="o">-&gt;</span><span class="na">getParameter</span><span class="p">(</span><span class="s1">&#39;size&#39;</span><span class="p">);</span> <span class="c1">// will return 2.3 float number</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="arrays-and-lists">
+<h4>Arrays and lists<a class="headerlink" href="#arrays-and-lists" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="sd">/**</span>
+<span class="sd"> * Arrays and lists</span>
+<span class="sd"> *</span>
+<span class="sd"> * @annotation foo=[one, two, three], array=[foo=[other, list]]</span>
+<span class="sd"> */</span>
+
+ <span class="nv">$annotation</span><span class="o">-&gt;</span><span class="na">getParameter</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span> <span class="c1">// will return [&#39;one&#39;, &#39;two&#39;, &#39;three&#39;]</span>
+ <span class="nv">$annotation</span><span class="o">-&gt;</span><span class="na">getParameter</span><span class="p">(</span><span class="s1">&#39;array&#39;</span><span class="p">);</span> <span class="c1">// will return [&#39;foo&#39; =&gt; [&#39;other&#39;, &#39;list&#39;]]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="objects-json-notation">
+<h4>Objects (json notation)<a class="headerlink" href="#objects-json-notation" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="sd">/**</span>
+<span class="sd"> * Objects</span>
+<span class="sd"> *</span>
+<span class="sd"> * @annotation foo={&quot;bar&quot;: [1, 2, 3]}</span>
+<span class="sd"> */</span>
+
+ <span class="nv">$annotation</span><span class="o">-&gt;</span><span class="na">getParameter</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span> <span class="c1">// will return {&quot;bar&quot; =&gt; [1, 2, 3]}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="booleans">
+<h4>Booleans<a class="headerlink" href="#booleans" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="sd">/**</span>
+<span class="sd"> * Booleans</span>
+<span class="sd"> *</span>
+<span class="sd"> * @annotation foo=true, bar=false</span>
+<span class="sd"> */</span>
+
+ <span class="nv">$annotation</span><span class="o">-&gt;</span><span class="na">getParameter</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span> <span class="c1">// will return TRUE</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="defining-your-own-annotations">
+<h3>Defining your own annotations<a class="headerlink" href="#defining-your-own-annotations" title="Permalink to this headline">¶</a></h3>
+<p>It is possible to define you own annotations that will have a default set of parameters
+and will help you when you not set the parameters in the comment block and need a value
+for those parameters.</p>
+<p>Lets see an example:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+<span class="k">use</span> <span class="nx">Slick\Common\Inspector</span><span class="p">,</span>
+    <span class="nx">Slick\Common\Inspector\Annotation</span><span class="p">;</span>
+
+<span class="c1">// A class to inspect</span>
+<span class="k">class</span> <span class="nc">Foo</span>
+<span class="p">{</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * @custom test, foo=true</span>
+<span class="sd">     */</span>
+     <span class="k">private</span> <span class="nv">$_name</span><span class="p">;</span>
+
+<span class="p">}</span>
+
+<span class="c1">// Our custom annotation</span>
+<span class="k">class</span> <span class="nc">CustomAnnotation</span> <span class="k">extends</span> <span class="nx">Annotation</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="nv">$_parameters</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;foo&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+        <span class="s1">&#39;bar&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span>
+    <span class="p">];</span>
+<span class="p">}</span>
+
+
+<span class="c1">// Register our new annotation</span>
+<span class="nx">Inspector</span><span class="o">::</span><span class="na">addAnnotationClass</span><span class="p">(</span><span class="s1">&#39;custom&#39;</span><span class="p">,</span> <span class="s1">&#39;\CustomAnnotation&#39;</span><span class="p">);</span>
+
+<span class="nv">$inspector</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Inspector</span><span class="p">(</span><span class="s1">&#39;\Foo&#39;</span><span class="p">);</span>
+
+<span class="nv">$annotation</span> <span class="o">=</span> <span class="nv">$inspector</span><span class="o">-&gt;</span><span class="na">getPropertyAnnotations</span><span class="p">(</span><span class="s1">&#39;_name&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getAnnotation</span><span class="p">(</span><span class="s1">&#39;@custom&#39;</span><span class="p">);</span>
+
+<span class="nv">$annotations</span><span class="o">-&gt;</span><span class="na">getParameter</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span> <span class="c1">// will return TRUE</span>
+<span class="nv">$annotations</span><span class="o">-&gt;</span><span class="na">getParameter</span><span class="p">(</span><span class="s1">&#39;bar&#39;</span><span class="p">);</span> <span class="c1">// will return TRUE</span>
+<span class="nv">$annotations</span><span class="o">-&gt;</span><span class="na">getValue</span><span class="p">();</span> <span class="c1">// will return &#39;test&#39; string</span>
+</pre></div>
+</div>
+<p>As you can see it is very simple to have a annotation that you can define all parameter with default
+values an used them without worry if they are present or not in the comment.</p>
+<p>You only need to add the class to the inspector class map once, in your bootstrap for example.</p>
+</div>
 </div>
 </div>
 
@@ -306,6 +507,19 @@ the getInstance() method you need to define.</p>
 </ul>
 </li>
 <li><a class="reference internal" href="#creating-singletons">Creating Singletons</a></li>
+<li><a class="reference internal" href="#inspect-and-annotations">Inspect and Annotations</a><ul>
+<li><a class="reference internal" href="#inspect-classes-or-objects">Inspect classes or objects</a></li>
+<li><a class="reference internal" href="#retrieve-the-annotations">Retrieve the annotations</a></li>
+<li><a class="reference internal" href="#annotations-parser">Annotations Parser</a><ul>
+<li><a class="reference internal" href="#scalar-values">Scalar values</a></li>
+<li><a class="reference internal" href="#arrays-and-lists">Arrays and lists</a></li>
+<li><a class="reference internal" href="#objects-json-notation">Objects (json notation)</a></li>
+<li><a class="reference internal" href="#booleans">Booleans</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#defining-your-own-annotations">Defining your own annotations</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
