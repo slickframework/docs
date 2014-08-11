@@ -38,12 +38,7 @@ In this example we are using the default cache driver with default options, to s
 
 **Changing cache expire time**
 
-To set the expire time for cached data you can as follows:
-
-.. code-block:: php
-    :emphasize-lines: 8,9
-
-    <?php
+To set the expire time for cached data you can as follows::
 
     use Slick\Cache\Cache;
 
@@ -57,14 +52,9 @@ To set the expire time for cached data you can as follows:
         return $data;
     }
 
-    This will set the cached data life time for all the Driver::get() calls.
+This will set the cached data life time for all the Driver::get() calls.
 
-    You can set a per call specific cache duration like this:
-
-.. code-block:: php
-    :emphasize-lines: 8,9
-
-    <?php
+You can set a per call specific cache duration like this::
 
     use Slick\Cache\Cache;
 

@@ -1,0 +1,326 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Database Access &mdash; Slick Framework 1.0.0 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="Slick Framework 1.0.0 documentation" href="../index.html"/>
+        <link rel="up" title="Components" href="index.html"/>
+        <link rel="next" title="Using the SQL object" href="database/sql.html"/>
+        <link rel="prev" title="Common library" href="common.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="../index.html" class="fa fa-home"> Slick Framework</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Components</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="cache.html">Cache</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common.html">Common library</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">Database Access</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dependency.html">Dependency Injection Container</a></li>
+<li class="toctree-l2"><a class="reference internal" href="template.html">Template</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Slick Framework</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">Components</a> &raquo;</li>
+      
+    <li>Database Access</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="../_sources/components/database.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <div class="section" id="database-access">
+<h1>Database Access<a class="headerlink" href="#database-access" title="Permalink to this headline">¶</a></h1>
+<p>Slick Database Model is a simple database access layer that aims to abstract
+the data access operations.</p>
+<p>For this version it only supports the Mysql and Sqlite databases but it defines
+a good set of interfaces that allow you do create your database adapters as well.</p>
+<p><strong>Installation</strong></p>
+<p>To install this component add the following line to your <tt class="docutils literal"><span class="pre">composer.json</span></tt></p>
+<div class="highlight-json"><div class="highlight"><pre>{
+    &quot;require&quot;: {
+        &quot;slick/database&quot;: &quot;~1.1.0&quot;,
+        ...
+    }
+}
+</pre></div>
+</div>
+<div class="section" id="create-a-database-adapter">
+<h2>Create a database adapter<a class="headerlink" href="#create-a-database-adapter" title="Permalink to this headline">¶</a></h2>
+<p>For accessing a database you will need a database adapter that provides basic
+operations like connecting and querying a database server.</p>
+<p>So lets start by creating an Mysql adapter for example:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Slick\Database\Adapter</span><span class="p">;</span>
+
+<span class="nv">$adapter</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Adapter</span><span class="p">([</span>
+    <span class="s1">&#39;driver&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Mysql&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;options&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">&#39;database&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;test&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;root&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;host&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;localhost&#39;</span>
+    <span class="p">]</span>
+ <span class="p">]);</span>
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">Slick\Database\Adapter</span></tt> factory allows you to create an adapter by passing
+a driver name and an array of specific database options.</p>
+<p>Right now you don&#8217;t have an adapter. <tt class="docutils literal"><span class="pre">$adapter</span></tt> is only a factory object that
+generalises the database adapter construction.</p>
+<p>To create the adapter you need to initialize it:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="nv">$mysql</span> <span class="o">=</span> <span class="nv">$adapter</span><span class="o">-&gt;</span><span class="na">initialize</span><span class="p">();</span>
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">Adapter::initialize()</span></tt> will create and connect the database adapter for you.
+It may throw an <tt class="docutils literal"><span class="pre">Slick\Database\Exception</span></tt> if it can&#8217;t connect to the the
+database server, so it wised to wrap it in a try... catch block:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="k">try</span> <span class="p">{</span>
+    <span class="nv">$mysql</span> <span class="o">=</span> <span class="nv">$adapter</span><span class="o">-&gt;</span><span class="na">initialize</span><span class="p">();</span>
+<span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">Slick\Database\Exception</span> <span class="nv">$exp</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Handle the exception</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="database-adapter-usage">
+<h2>Database adapter usage<a class="headerlink" href="#database-adapter-usage" title="Permalink to this headline">¶</a></h2>
+<p>Now that we have our database we can start using it. The implemented driver here
+use the <a class="reference external" href="http://php.net/manual/en/book.pdo.php">PHP Data Objects (PDO)</a> extension
+so it proxies some basic methods and as a getter for the PDO object after
+initialization.</p>
+<p><strong>Query data</strong>
+So lets query some data out of our database:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="nv">$sql</span> <span class="o">=</span> <span class="s2">&quot;SELECT * FROM users WHERE id = :id&quot;</span><span class="p">;</span>
+<span class="nv">$params</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;:id&#39;</span> <span class="o">=&gt;</span> <span class="mi">2</span><span class="p">];</span>
+
+<span class="nv">$data</span> <span class="o">=</span> <span class="nv">$mysql</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="nv">$sql</span><span class="p">,</span> <span class="nv">$params</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">$data</span></tt> is a <tt class="docutils literal"><span class="pre">Slick\Database\RecordList</span></tt>, a special object that implements
+<tt class="docutils literal"><span class="pre">Countable</span></tt>, <tt class="docutils literal"><span class="pre">ArrayAccess</span></tt>, <tt class="docutils literal"><span class="pre">IteratorAggregate</span></tt> and <tt class="docutils literal"><span class="pre">Serializable</span></tt> interfaces
+and holds a list of records.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p>Although <tt class="docutils literal"><span class="pre">$data</span></tt> be an object it can be used as an array as it implements
+<tt class="docutils literal"><span class="pre">ArrayAccess</span></tt> interface. You can use things like:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="nv">$first</span> <span class="o">=</span> <span class="nb">reset</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span> <span class="c1">// first item of the list.</span>
+</pre></div>
+</div>
+<p class="last">It also implements <tt class="docutils literal"><span class="pre">Serializable</span></tt> in order to be used with
+<tt class="docutils literal"><span class="pre">Slick\Cache\DriverInterface</span></tt></p>
+</div>
+<p>As you may notice the binding of the parameters in the query method is similar
+to the <tt class="docutils literal"><span class="pre">PDOStatement</span></tt> witch can use the ? placeholder of <tt class="docutils literal"><span class="pre">:name</span></tt> as a
+named placeholder.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In background the query method is creating a PDO prepared statement and
+binding the values to its placeholders. So if you never used prepared
+statements before you should read more about it in the
+<a class="reference external" href="http://php.net/manual/en/pdo.prepared-statements.php">Prepared statements and stored procedures</a>
+manual.</p>
+</div>
+</div>
+<div class="section" id="other-adapter-methods">
+<h2>Other adapter methods<a class="headerlink" href="#other-adapter-methods" title="Permalink to this headline">¶</a></h2>
+<p>Database adapter has other methods:</p>
+<blockquote>
+<div><ul>
+<li><p class="first"><tt class="docutils literal"><span class="pre">execute($sql,</span> <span class="pre">$params)</span></tt> Executes a SQL query but returns the affected rows:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="nv">$affected</span> <span class="o">=</span> <span class="nv">$mysql</span><span class="o">-&gt;</span><span class="na">execute</span><span class="p">(</span>
+    <span class="s1">&#39;UPDATE users SET active=? WHERE id = ?&#39;</span><span class="p">,</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="p">);</span>
+<span class="k">print</span> <span class="nv">$result</span><span class="p">;</span> <span class="c1">// will output 1</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">getAffectedRows()</span></tt> Returns the affected rows by last executed SQL statement</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">getLastInsertId()</span></tt> Returns the ID of the last row to be inserted:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="nv">$mysql</span><span class="o">-&gt;</span><span class="na">execute</span><span class="p">(</span>
+    <span class="s1">&#39;INSERT INTO users (name, email) VALUES (:name, :email),</span>
+<span class="s1">    [</span>
+<span class="s1">        &#39;</span><span class="o">:</span><span class="nx">name</span><span class="s1">&#39; =&gt; &#39;</span><span class="nx">Jon</span> <span class="nx">Doe</span><span class="s1">&#39;,</span>
+<span class="s1">        &#39;</span><span class="o">:</span><span class="nx">email</span><span class="s1">&#39; =&gt; &#39;</span><span class="nx">jon</span><span class="o">.</span><span class="nx">doe</span><span class="o">@</span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="err">&#39;</span>
+    <span class="p">]</span>
+<span class="p">);</span>
+<span class="k">print</span> <span class="nv">$mysql</span><span class="o">-&gt;</span><span class="na">getLastInsertId</span><span class="p">();</span> <span class="c1">// Will output something like 43</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">getLastError()</span></tt> The description of the latest error</p>
+</li>
+</ul>
+</div></blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The <tt class="docutils literal"><span class="pre">execute()</span></tt> and <tt class="docutils literal"><span class="pre">query()</span></tt> methods may throw
+<tt class="docutils literal"><span class="pre">Slick\Database\Exception\SqlQueryException</span></tt> exceptions so its wised
+to wrap these methods in a <tt class="docutils literal"><span class="pre">try{...}</span> <span class="pre">catch(){}</span></tt> block.</p>
+</div>
+</div>
+<div class="section" id="using-the-pdo-object">
+<h2>Using the PDO object<a class="headerlink" href="#using-the-pdo-object" title="Permalink to this headline">¶</a></h2>
+<p>As seen above, the adapter uses the PHP PDO extension to deal with the database
+and you can always use it in your. Look at the following code:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="nv">$pdo</span> <span class="o">=</span> <span class="nv">$mysql</span><span class="o">-&gt;</span><span class="na">getHandler</span><span class="p">();</span>
+
+<span class="nv">$pdo</span><span class="o">-&gt;</span><span class="na">beginTransaction</span><span class="p">();</span>
+
+<span class="cm">/* Change the database schema and data */</span>
+<span class="nv">$sth</span> <span class="o">=</span> <span class="nv">$pdo</span><span class="o">-&gt;</span><span class="na">exec</span><span class="p">(</span><span class="s2">&quot;DROP TABLE fruit&quot;</span><span class="p">);</span>
+<span class="nv">$sth</span> <span class="o">=</span> <span class="nv">$pdo</span><span class="o">-&gt;</span><span class="na">exec</span><span class="p">(</span><span class="s2">&quot;UPDATE dessert SET name = &#39;hamburger&#39;&quot;</span><span class="p">);</span>
+
+<span class="cm">/* Recognize mistake and roll back changes */</span>
+<span class="nv">$pdo</span><span class="o">-&gt;</span><span class="na">rollBack</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>In this script we use the PDO object to perform a transaction in the database.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="database/sql.html">Using the SQL object</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="database/sql.html" class="btn btn-neutral float-right" title="Using the SQL object"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="common.html" class="btn btn-neutral" title="Common library"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Slick Framework.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

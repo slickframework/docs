@@ -1,0 +1,300 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Using the SQL object &mdash; Slick Framework 1.0.0 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="Slick Framework 1.0.0 documentation" href="../../index.html"/>
+        <link rel="up" title="Database Access" href="../database.html"/>
+        <link rel="next" title="Dependency Injection Container" href="../dependency.html"/>
+        <link rel="prev" title="Database Access" href="../database.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="../../index.html" class="fa fa-home"> Slick Framework</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Components</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../cache.html">Cache</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../common.html">Common library</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../database.html">Database Access</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dependency.html">Dependency Injection Container</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../template.html">Template</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">Slick Framework</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../index.html">Components</a> &raquo;</li>
+      
+          <li><a href="../database.html">Database Access</a> &raquo;</li>
+      
+    <li>Using the SQL object</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="../../_sources/components/database/sql.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <div class="section" id="using-the-sql-object">
+<h1>Using the SQL object<a class="headerlink" href="#using-the-sql-object" title="Permalink to this headline">¶</a></h1>
+<p>Slick database component also comes with a SQL object that helps you create
+SQL statements regardless of the database dialect that you adapter uses.</p>
+<p>The main goal is to write your SQL so it can be executed in any database server.</p>
+<div class="section" id="select-statement">
+<h2>Select statement<a class="headerlink" href="#select-statement" title="Permalink to this headline">¶</a></h2>
+<p>Creating a <tt class="docutils literal"><span class="pre">SELECT</span></tt> statement is very ease:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Slick\Database\Sql</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Slick\Database\Adapter</span><span class="p">;</span>
+
+<span class="nv">$adapter</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Adapter</span><span class="p">([</span>
+    <span class="s1">&#39;driver&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Mysql&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;options&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">&#39;database&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;test&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;root&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;host&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;localhost&#39;</span>
+    <span class="p">]</span>
+<span class="p">]);</span>
+<span class="nv">$adapter</span> <span class="o">=</span> <span class="nv">$adapter</span><span class="o">-&gt;</span><span class="na">initialize</span><span class="p">();</span>
+
+<span class="nv">$data</span> <span class="o">=</span> <span class="nx">Sql</span><span class="o">::</span><span class="na">createSql</span><span class="p">(</span><span class="nv">$adapter</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">])</span>
+    <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;active = ?&#39;</span><span class="p">,</span> <span class="p">[</span><span class="k">true</span><span class="p">])</span>
+    <span class="o">-&gt;</span><span class="na">order</span><span class="p">(</span><span class="s1">&#39;name DESC&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">limit</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">all</span><span class="p">();</span>
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">$data</span></tt> is a record list with the first 10 rows of users with email and name
+fields that are active and ordered by name, descending. Cool, isn&#8217;t it!?</p>
+<div class="section" id="filtering-data-with-where">
+<h3>Filtering data with &#8220;where&#8221;<a class="headerlink" href="#filtering-data-with-where" title="Permalink to this headline">¶</a></h3>
+<p>The where method in the select SQL object mimics the <tt class="docutils literal"><span class="pre">WHERE</span></tt> clause in the SQL
+language. So it is possible to set the filter conditions and use it with PDO
+Prepared statement in a single call.</p>
+<p><tt class="docutils literal"><span class="pre">Slick\Database\Sql\Select::where()</span></tt> method accepts two arguments: the conditions
+and the values that need to be bind in the query call.</p>
+<p>So lets see some examples:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="nv">$select</span> <span class="o">=</span> <span class="nx">Sql</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="nv">$adapter</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">);</span>
+
+<span class="nv">$select</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;active = 1&#39;</span><span class="p">);</span> <span class="c1">// A literal condition that will be used as is.</span>
+
+<span class="nv">$select</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;active = ?&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="c1">// use of positional ? placeholders</span>
+
+<span class="nv">$select</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span>
+    <span class="s1">&#39;active = :state&#39;</span><span class="p">,</span>
+    <span class="p">[</span>
+        <span class="s1">&#39;:state&#39;</span> <span class="o">=&gt;</span> <span class="mi">1</span>
+    <span class="p">]</span>
+<span class="p">);</span> <span class="c1">// use of named placeholders</span>
+</pre></div>
+</div>
+<p>All the call to the <tt class="docutils literal"><span class="pre">where()</span></tt> method above will result in the same query condition but allows
+you to decide whenever you want the values to be bind and cleaned, using prepared statements
+or enter other conditions that don&#8217;t need to use these features.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The call to <tt class="docutils literal"><span class="pre">Slick\Database\Sql\Select::where()</span></tt> method is cumulative and by default
+it will use the <tt class="docutils literal"><span class="pre">AND</span></tt> boolean operation to aggregate all the conditions.</p>
+</div>
+<p>It is possible to add multiple conditions and the way they are combined with each other. The
+following example will use the <tt class="docutils literal"><span class="pre">OR</span></tt> operation with 2 conditions:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="nv">$select</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;active = 1&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">orWhere</span><span class="p">(</span><span class="s1">&#39;name LIKE :name&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;:name&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;%</span><span class="si">{</span><span class="nv">$name</span><span class="si">}</span><span class="s2">%]);</span>
+
+<span class="s2">// The resulting condition is</span>
+<span class="s2">// &#39;WHERE active = 1 OR name LIKE :name&#39;</span>
+</pre></div>
+</div>
+<p>An <tt class="docutils literal"><span class="pre">andWhere()</span></tt> method is also available in order to allow more conditions to be aggregated.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">When using bind parameters and prepared statements it&#8217;s preferable to use the named
+placeholders as they are more understandable and cab be reused. ? position placeholders
+are great for simple condition with fewer parameters.</p>
+</div>
+</div>
+<div class="section" id="joining-other-tables">
+<h3>Joining other tables<a class="headerlink" href="#joining-other-tables" title="Permalink to this headline">¶</a></h3>
+<p>If you need to join other tables to que Select query you can yse the <tt class="docutils literal"><span class="pre">join()</span></tt>
+method as follows:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="nv">$select</span><span class="o">-&gt;</span><span class="na">join</span><span class="p">(</span>
+    <span class="s1">&#39;profiles&#39;</span><span class="p">,</span>             <span class="c1">// -&gt; the table name</span>
+    <span class="s1">&#39;prof.uid = users.id&#39;</span><span class="p">,</span>  <span class="c1">// -&gt; the join condition</span>
+    <span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="s1">&#39;group&#39;</span><span class="p">],</span>       <span class="c1">// -&gt; (optional) the field list to retrieve</span>
+    <span class="s1">&#39;prof&#39;</span><span class="p">,</span>                 <span class="c1">// -&gt; (optional) table alias</span>
+    <span class="nx">Join</span><span class="o">::</span><span class="na">JOIN_LEFT</span>         <span class="c1">// -&gt; (optional) the join type</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+<p>The above code will produce a left join with table profiles using the alias prof
+and retrieving the age and group fields on recodes that uid is equal to the user&#8217;s
+table primary key (id field).
+This way of create is very similar to the SQL it self witch leads to a very short
+learning curve to use it and with the advantage of working if your database adapter
+changes.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Some notes about the parameters:</p>
+<ul class="simple">
+<li>If the field list is left blank it will use the <tt class="docutils literal"><span class="pre">*</span></tt> wildcard. if you just want to join the table but without the fields you need to set this parameter to <tt class="docutils literal"><span class="pre">null</span></tt>;</li>
+<li>If you enter an alias to the table in the 4th parameter you need to use that alias in the <tt class="docutils literal"><span class="pre">ON</span></tt> clause in the 2nd parameter;</li>
+<li>Use the <tt class="docutils literal"><span class="pre">Slick\Database\Sql\Select\Join::JOIN_xxx</span></tt> constants to set the proper join type. Please see the available join types in the table bellow.</li>
+</ul>
+<table border="1" class="last docutils">
+<colgroup>
+<col width="100%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Constant</strong></td>
+</tr>
+<tr class="row-even"><td>JOIN_INNER</td>
+</tr>
+<tr class="row-odd"><td>JOIN_LEFT</td>
+</tr>
+<tr class="row-even"><td>JOIN_RIGHT</td>
+</tr>
+<tr class="row-odd"><td>JOIN_FULL</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../dependency.html" class="btn btn-neutral float-right" title="Dependency Injection Container"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../database.html" class="btn btn-neutral" title="Database Access"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Slick Framework.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'1.0.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
