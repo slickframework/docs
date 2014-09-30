@@ -129,3 +129,7 @@ changes.
     +-------------+
     | JOIN_FULL   |
     +-------------+
+
+Ordering the results
+--------------------
+
