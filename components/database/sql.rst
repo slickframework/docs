@@ -8,6 +8,9 @@ SQL statements regardless of the database dialect that you adapter uses.
 
 The main goal is to write your SQL so it can be executed in any database server.
 
+.. contents:: Table of Contents
+    :depth: 3
+
 Select statement
 ----------------
 
@@ -90,7 +93,7 @@ An ``andWhere()`` method is also available in order to allow more conditions to 
 Joining other tables
 ____________________
 
-If you need to join other tables to que Select query you can yse the ``join()``
+If you need to join other tables to que Select query you can use the ``join()``
 method as follows::
 
     $select->join(
@@ -101,10 +104,10 @@ method as follows::
         Join::JOIN_LEFT         // -> (optional) the join type
     );
 
-The above code will produce a left join with table profiles using the alias prof
-and retrieving the age and group fields on recodes that uid is equal to the user's
-table primary key (id field).
-This way of create is very similar to the SQL it self witch leads to a very short
+The above code will produce a left join with table profiles using the alias ``prof``
+and retrieving the ``age`` and ``group`` fields on recodes where ``uid`` is equal to the user's
+table primary key (``id`` field).
+This way of create a join is very similar to the SQL it self witch leads to a very short
 learning curve to use it and with the advantage of working if your database adapter
 changes.
 
@@ -118,18 +121,28 @@ changes.
 
     * Use the ``Slick\Database\Sql\Select\Join::JOIN_xxx`` constants to set the proper join type. Please see the available join types in the table bellow.
 
-    +-------------+
-    | **Constant**|
-    +-------------+
-    | JOIN_INNER  |
-    +-------------+
-    | JOIN_LEFT   |
-    +-------------+
-    | JOIN_RIGHT  |
-    +-------------+
-    | JOIN_FULL   |
-    +-------------+
+    +-------------+-----------------+
+    | **Constant**| **SQL**         |
+    +-------------+-----------------+
+    | JOIN_INNER  | INNER JOIN      |
+    +-------------+-----------------+
+    | JOIN_LEFT   | LEFT JOIN       |
+    +-------------+-----------------+
+    | JOIN_RIGHT  | RIGHT JOIN      |
+    +-------------+-----------------+
+    | JOIN_FULL   | FULL OUTER JOIN |
+    +-------------+-----------------+
 
 Ordering the results
---------------------
+____________________
 
+Adding order to the ``SELECT`` statement its similar to the SQL, as all the methods we have
+seen so far. Just add the order clause as you would do in regular SQL query::
+
+    $select->order("users.name DESC");
+
+.. Note::
+    The argument passed to the ``Slick\Database\Sql\Select::order()`` method is used directly
+    in the SQL ``SELECT`` statement sent to the database adapter. The order clause in SQL is
+    almost identical over the different database systems but you should validate it if you
+    change the database adapter.

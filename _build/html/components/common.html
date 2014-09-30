@@ -104,13 +104,24 @@
           <div role="main">
             
   <div class="section" id="common-library">
-<h1>Common library<a class="headerlink" href="#common-library" title="Permalink to this headline">¶</a></h1>
+<h1><a class="toc-backref" href="#id1">Common library</a><a class="headerlink" href="#common-library" title="Permalink to this headline">¶</a></h1>
 <p>Common library is a set of useful classes and traits that are in almost every class
 in the entire Slick framework. They form a solid base to develop on top of and help
 you remove the tedious work of create getters, setters, allow read end or write access
 to the properties and inspect classes and properties.</p>
+<div class="contents topic" id="table-of-contents">
+<p class="topic-title first">Table of Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#common-library" id="id1">Common library</a><ul>
+<li><a class="reference internal" href="#understanding-the-base-class" id="id2">Understanding the &#8220;Base&#8221; class</a></li>
+<li><a class="reference internal" href="#creating-singletons" id="id3">Creating Singletons</a></li>
+<li><a class="reference internal" href="#inspect-and-annotations" id="id4">Inspect and Annotations</a></li>
+</ul>
+</li>
+</ul>
+</div>
 <div class="section" id="understanding-the-base-class">
-<h2>Understanding the &#8220;Base&#8221; class<a class="headerlink" href="#understanding-the-base-class" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id2">Understanding the &#8220;Base&#8221; class</a><a class="headerlink" href="#understanding-the-base-class" title="Permalink to this headline">¶</a></h2>
 <p>The <tt class="docutils literal"><span class="pre">Slick\Common\Base</span></tt> class is one of the most important classes of Slick. It is responsible for the
 &#8220;magic&#8221; in classes that extends it. It is very important that you have a clear understanding of what
 this class does to really speed up your development.</p>
@@ -284,7 +295,7 @@ when creating the object is a more elegant and flexible way of setting the objec
 </div>
 </div>
 <div class="section" id="creating-singletons">
-<h2>Creating Singletons<a class="headerlink" href="#creating-singletons" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id3">Creating Singletons</a><a class="headerlink" href="#creating-singletons" title="Permalink to this headline">¶</a></h2>
 <p>If you need to create a singleton object and have all the <tt class="docutils literal"><span class="pre">Slick\Common\Base</span></tt> behavior this Slick component
 also have a <tt class="docutils literal"><span class="pre">Slick\Common\BaseSingleton</span></tt> that implements the <tt class="docutils literal"><span class="pre">Slick\Common\SingletonInterface</span></tt> witch has
 the getInstance() method you need to define.</p>
@@ -317,7 +328,7 @@ the getInstance() method you need to define.</p>
 <p>All the features are present in SingletonBase class and you only need to implement the getInstance() method.</p>
 </div>
 <div class="section" id="inspect-and-annotations">
-<h2>Inspect and Annotations<a class="headerlink" href="#inspect-and-annotations" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id4">Inspect and Annotations</a><a class="headerlink" href="#inspect-and-annotations" title="Permalink to this headline">¶</a></h2>
 <p>The <tt class="docutils literal"><span class="pre">Slick\Common</span></tt> component also has an <tt class="docutils literal"><span class="pre">Inspector</span></tt> utility class that can help you with class or object
 inspection and <tt class="docutils literal"><span class="pre">Annotations</span></tt> parsing. It is also possible to define custom annotations to use with your classes.
 The base class uses the <tt class="docutils literal"><span class="pre">Slick\Common\Inspector</span></tt> to determine the visibility and access to it properties.</p>

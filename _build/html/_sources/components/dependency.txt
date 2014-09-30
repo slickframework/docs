@@ -3,6 +3,9 @@
 Dependency Injection Container
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. contents:: Table of Contents
+    :depth: 2
+
 Dependency injection and dependency injection containers are tow different things. Dependency injection is a way
 of doing better code as you can read in this Fabien Pontencier's
 `article about dependency injection <http://fabien.potencier.org/article/11/what-is-dependency-injection>`_.
@@ -11,7 +14,8 @@ In other hand *Dependency Injection Container* is a tool that will help you inje
 This component for Slick is a very simple library where you can define dependencies and have them injected
 in your object as you call for them.
 
-**Installation**
+Installation
+------------
 
 To install this component add the following line to your ``composer.json``
 

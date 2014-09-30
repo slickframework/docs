@@ -9,7 +9,17 @@ the data access operations.
 For this version it only supports the Mysql and Sqlite databases but it defines
 a good set of interfaces that allow you do create your database adapters as well.
 
-**Installation**
+.. contents:: Table of Contents
+    :depth: 2
+
+.. toctree::
+    :maxdepth: 2
+
+    database/sql
+
+
+Installation
+------------
 
 To install this component add the following line to your ``composer.json``
 
@@ -156,8 +166,3 @@ and you can always use it in your. Look at the following code::
     $pdo->rollBack();
 
 In this script we use the PDO object to perform a transaction in the database.
-
-.. toctree::
-    :maxdepth: 1
-
-    database/sql

@@ -34,7 +34,7 @@ This will install the components in your vendor directory.
 **Slick components**
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 1
 
     cache
     common

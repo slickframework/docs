@@ -8,6 +8,9 @@ Slick cache component deals with cache providing services installed on your syst
 I comes with support for *Memcached* (``memcached`` daemon) and *File* (caching data into files) out of the box,
 but it also defines a driver interface that allow you to add your own drivers to your project.
 
+.. contents:: Table of Contents
+    :depth: 2
+
 Using a cache driver
 """"""""""""""""""""
 
@@ -17,7 +20,6 @@ to get an initialized cache driver.
 Lets look at the following example:
 
 .. code-block:: php
-    :emphasize-lines: 3,7,8,11
 
     <?php
 
@@ -84,7 +86,6 @@ to store in cache it will create a file with it.
 Lets look at the following example:
 
 .. code-block:: php
-    :emphasize-lines: 7
 
     <?php
 
@@ -126,7 +127,6 @@ and pass the driver name and options.
 The following example illustrates a possible way of doing it:
 
 .. code-block:: php
-    :emphasize-lines: 8
 
     <?php
 

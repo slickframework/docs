@@ -106,12 +106,26 @@
           <div role="main">
             
   <div class="section" id="using-the-sql-object">
-<h1>Using the SQL object<a class="headerlink" href="#using-the-sql-object" title="Permalink to this headline">¶</a></h1>
+<h1><a class="toc-backref" href="#id1">Using the SQL object</a><a class="headerlink" href="#using-the-sql-object" title="Permalink to this headline">¶</a></h1>
 <p>Slick database component also comes with a SQL object that helps you create
 SQL statements regardless of the database dialect that you adapter uses.</p>
 <p>The main goal is to write your SQL so it can be executed in any database server.</p>
+<div class="contents topic" id="table-of-contents">
+<p class="topic-title first">Table of Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#using-the-sql-object" id="id1">Using the SQL object</a><ul>
+<li><a class="reference internal" href="#select-statement" id="id2">Select statement</a><ul>
+<li><a class="reference internal" href="#filtering-data-with-where" id="id3">Filtering data with &#8220;where&#8221;</a></li>
+<li><a class="reference internal" href="#joining-other-tables" id="id4">Joining other tables</a></li>
+<li><a class="reference internal" href="#ordering-the-results" id="id5">Ordering the results</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
 <div class="section" id="select-statement">
-<h2>Select statement<a class="headerlink" href="#select-statement" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id2">Select statement</a><a class="headerlink" href="#select-statement" title="Permalink to this headline">¶</a></h2>
 <p>Creating a <tt class="docutils literal"><span class="pre">SELECT</span></tt> statement is very ease:</p>
 <div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Slick\Database\Sql</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">Slick\Database\Adapter</span><span class="p">;</span>
@@ -137,7 +151,7 @@ SQL statements regardless of the database dialect that you adapter uses.</p>
 <p><tt class="docutils literal"><span class="pre">$data</span></tt> is a record list with the first 10 rows of users with email and name
 fields that are active and ordered by name, descending. Cool, isn&#8217;t it!?</p>
 <div class="section" id="filtering-data-with-where">
-<h3>Filtering data with &#8220;where&#8221;<a class="headerlink" href="#filtering-data-with-where" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id3">Filtering data with &#8220;where&#8221;</a><a class="headerlink" href="#filtering-data-with-where" title="Permalink to this headline">¶</a></h3>
 <p>The where method in the select SQL object mimics the <tt class="docutils literal"><span class="pre">WHERE</span></tt> clause in the SQL
 language. So it is possible to set the filter conditions and use it with PDO
 Prepared statement in a single call.</p>
@@ -184,8 +198,8 @@ are great for simple condition with fewer parameters.</p>
 </div>
 </div>
 <div class="section" id="joining-other-tables">
-<h3>Joining other tables<a class="headerlink" href="#joining-other-tables" title="Permalink to this headline">¶</a></h3>
-<p>If you need to join other tables to que Select query you can yse the <tt class="docutils literal"><span class="pre">join()</span></tt>
+<h3><a class="toc-backref" href="#id4">Joining other tables</a><a class="headerlink" href="#joining-other-tables" title="Permalink to this headline">¶</a></h3>
+<p>If you need to join other tables to que Select query you can use the <tt class="docutils literal"><span class="pre">join()</span></tt>
 method as follows:</p>
 <div class="highlight-php"><div class="highlight"><pre><span class="nv">$select</span><span class="o">-&gt;</span><span class="na">join</span><span class="p">(</span>
     <span class="s1">&#39;profiles&#39;</span><span class="p">,</span>             <span class="c1">// -&gt; the table name</span>
@@ -196,10 +210,10 @@ method as follows:</p>
 <span class="p">);</span>
 </pre></div>
 </div>
-<p>The above code will produce a left join with table profiles using the alias prof
-and retrieving the age and group fields on recodes that uid is equal to the user&#8217;s
-table primary key (id field).
-This way of create is very similar to the SQL it self witch leads to a very short
+<p>The above code will produce a left join with table profiles using the alias <tt class="docutils literal"><span class="pre">prof</span></tt>
+and retrieving the <tt class="docutils literal"><span class="pre">age</span></tt> and <tt class="docutils literal"><span class="pre">group</span></tt> fields on recodes where <tt class="docutils literal"><span class="pre">uid</span></tt> is equal to the user&#8217;s
+table primary key (<tt class="docutils literal"><span class="pre">id</span></tt> field).
+This way of create a join is very similar to the SQL it self witch leads to a very short
 learning curve to use it and with the advantage of working if your database adapter
 changes.</p>
 <div class="admonition note">
@@ -212,26 +226,44 @@ changes.</p>
 </ul>
 <table border="1" class="last docutils">
 <colgroup>
-<col width="100%" />
+<col width="43%" />
+<col width="57%" />
 </colgroup>
 <tbody valign="top">
 <tr class="row-odd"><td><strong>Constant</strong></td>
+<td><strong>SQL</strong></td>
 </tr>
 <tr class="row-even"><td>JOIN_INNER</td>
+<td>INNER JOIN</td>
 </tr>
 <tr class="row-odd"><td>JOIN_LEFT</td>
+<td>LEFT JOIN</td>
 </tr>
 <tr class="row-even"><td>JOIN_RIGHT</td>
+<td>RIGHT JOIN</td>
 </tr>
 <tr class="row-odd"><td>JOIN_FULL</td>
+<td>FULL OUTER JOIN</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-</div>
 <div class="section" id="ordering-the-results">
-<h2>Ordering the results<a class="headerlink" href="#ordering-the-results" title="Permalink to this headline">¶</a></h2>
+<h3><a class="toc-backref" href="#id5">Ordering the results</a><a class="headerlink" href="#ordering-the-results" title="Permalink to this headline">¶</a></h3>
+<p>Adding order to the <tt class="docutils literal"><span class="pre">SELECT</span></tt> statement its similar to the SQL, as all the methods we have
+seen so far. Just add the order clause as you would do in regular SQL query:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="nv">$select</span><span class="o">-&gt;</span><span class="na">order</span><span class="p">(</span><span class="s2">&quot;users.name DESC&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The argument passed to the <tt class="docutils literal"><span class="pre">Slick\Database\Sql\Select::order()</span></tt> method is used directly
+in the SQL <tt class="docutils literal"><span class="pre">SELECT</span></tt> statement sent to the database adapter. The order clause in SQL is
+almost identical over the different database systems but you should validate it if you
+change the database adapter.</p>
+</div>
+</div>
 </div>
 </div>
 

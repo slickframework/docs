@@ -31,7 +31,7 @@
     <link rel="top" title="Slick Framework 1.0.0 documentation" href="../index.html"/>
         <link rel="up" title="Components" href="index.html"/>
         <link rel="next" title="Template" href="template.html"/>
-        <link rel="prev" title="Database Access" href="database.html"/> 
+        <link rel="prev" title="Using the SQL object" href="database/sql.html"/> 
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
@@ -104,14 +104,27 @@
           <div role="main">
             
   <div class="section" id="dependency-injection-container">
-<h1>Dependency Injection Container<a class="headerlink" href="#dependency-injection-container" title="Permalink to this headline">¶</a></h1>
+<h1><a class="toc-backref" href="#id1">Dependency Injection Container</a><a class="headerlink" href="#dependency-injection-container" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="table-of-contents">
+<p class="topic-title first">Table of Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#dependency-injection-container" id="id1">Dependency Injection Container</a><ul>
+<li><a class="reference internal" href="#installation" id="id2">Installation</a></li>
+<li><a class="reference internal" href="#defining-injections" id="id3">Defining injections</a></li>
+<li><a class="reference internal" href="#using-dependency-container" id="id4">Using dependency container</a></li>
+<li><a class="reference internal" href="#object-scope" id="id5">Object scope</a></li>
+</ul>
+</li>
+</ul>
+</div>
 <p>Dependency injection and dependency injection containers are tow different things. Dependency injection is a way
 of doing better code as you can read in this Fabien Pontencier&#8217;s
 <a class="reference external" href="http://fabien.potencier.org/article/11/what-is-dependency-injection">article about dependency injection</a>.
 In other hand <em>Dependency Injection Container</em> is a tool that will help you injectic dependencies.</p>
 <p>This component for Slick is a very simple library where you can define dependencies and have them injected
 in your object as you call for them.</p>
-<p><strong>Installation</strong></p>
+<div class="section" id="installation">
+<h2><a class="toc-backref" href="#id2">Installation</a><a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
 <p>To install this component add the following line to your <tt class="docutils literal"><span class="pre">composer.json</span></tt></p>
 <div class="highlight-json"><div class="highlight"><pre><span class="p">{</span>
     <span class="nt">&quot;require&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -120,8 +133,9 @@ in your object as you call for them.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
+</div>
 <div class="section" id="defining-injections">
-<h2>Defining injections<a class="headerlink" href="#defining-injections" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id3">Defining injections</a><a class="headerlink" href="#defining-injections" title="Permalink to this headline">¶</a></h2>
 <p>Container builder needs an array of definitions to build a dependency container. Definition class helps you
 define those injections.</p>
 <p><strong>Value definition</strong></p>
@@ -190,7 +204,7 @@ other name you only need to create a link.</p>
 <p>Now if you call Container::get(&#8220;myObject&#8221;) the same object of &#8220;myCoolObject&#8221; will be returned.</p>
 </div>
 <div class="section" id="using-dependency-container">
-<h2>Using dependency container<a class="headerlink" href="#using-dependency-container" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id4">Using dependency container</a><a class="headerlink" href="#using-dependency-container" title="Permalink to this headline">¶</a></h2>
 <p>Now that we have our definitions in place, lets use them. You will need to create a container and
 pass the definitions to it.</p>
 <p>Lets see a full example:</p>
@@ -224,7 +238,7 @@ pass the definitions to it.</p>
 <p>Now we have a full working container fed with our definitions ready to be used.</p>
 </div>
 <div class="section" id="object-scope">
-<h2>Object scope<a class="headerlink" href="#object-scope" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id5">Object scope</a><a class="headerlink" href="#object-scope" title="Permalink to this headline">¶</a></h2>
 <p>When defining your dependencies you can se the scope of the object:</p>
 <ul class="simple">
 <li><strong>Singleton</strong>: The object will be instantiated just once (the first time you call it) and then will be reused
@@ -289,7 +303,7 @@ and passing the scope you want along with it. See the example bellow:</p>
         <a href="template.html" class="btn btn-neutral float-right" title="Template"/>Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="database.html" class="btn btn-neutral" title="Database Access"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="database/sql.html" class="btn btn-neutral" title="Using the SQL object"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

@@ -7,6 +7,9 @@ in the entire Slick framework. They form a solid base to develop on top of and h
 you remove the tedious work of create getters, setters, allow read end or write access
 to the properties and inspect classes and properties.
 
+.. contents:: Table of Contents
+    :depth: 2
+
 Understanding the "Base" class
 ------------------------------
 The ``Slick\Common\Base`` class is one of the most important classes of Slick. It is responsible for the
