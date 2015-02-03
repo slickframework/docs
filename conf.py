@@ -14,14 +14,7 @@
 
 import sys
 import os
-on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
-
-from sphinx.highlighting import lexers
-from pygments.lexers.web import PhpLexer
-
-sys.path.append(os.path.abspath('_exts'))
-
-#import sphinx_rtd_ee
+import sphinx_rtd_theme
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -94,8 +87,6 @@ exclude_patterns = ['_build']
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = 'sphinx'
-highlight_language = 'php'
-lexers['php'] = PhpLexer(startinline=True)
 
 # A list of ignored prefixes for module index sorting.
 #modindex_common_prefix = []
@@ -108,6 +99,7 @@ lexers['php'] = PhpLexer(startinline=True)
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
+html_theme = 'sphinx_rtd_theme'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -115,10 +107,7 @@ lexers['php'] = PhpLexer(startinline=True)
 #html_theme_options = {}
 
 # Add any paths that contain custom themes here, relative to this directory.
-if not on_rtd:
-    import sphinx_rtd_theme
-    html_theme = 'sphinx_rtd_theme'
-    html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
+html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
