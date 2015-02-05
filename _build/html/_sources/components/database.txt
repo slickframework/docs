@@ -4,10 +4,9 @@ Database Access
 ===============
 
 Slick Database Model is a simple database access layer that aims to abstract
-the data access operations.
-
-For this version it only supports the Mysql and Sqlite databases but it defines
-a good set of interfaces that allow you do create your database adapters as well.
+the data access operations. For this version it only supports the Mysql and Sqlite
+databases but it defines a good set of interfaces that allow you do create your
+database adapters as well.
 
 .. contents:: Table of Contents
     :depth: 2

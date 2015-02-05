@@ -61,9 +61,9 @@ some expensive API call data.
 
 .. note::
     The default driver is Memcached with the following default options:
-        * ``duration``: 120
-        * ``host``: '127.0.0.1'
-        * ``port``: 11211
+        * ``duration: 120``
+        * ``host: '127.0.0.1'``
+        * ``port: 11211``
 
 Changing cache expire time
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -98,58 +98,79 @@ like this::
         $cache->set('data', $data);
     }
 
-DriverInterface::set
-~~~~~~~~~~~~~~~~~~~~
-Stores an item ::
-
-    public DriverInterface DriverInterface::set(string $key, mixed $value [, int $expire = -1])
-
-*Description*
+Slick\\Cache\\DriverInterface::set()
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     Set/stores a value with a given key. If no value is set in the expire parameter the
     default ``Cache::duration`` will be used.
 
-*Parameters*
-    * key: The key where value will be stored
-    * value: The value to store
-    * expire: The live time of cache in seconds
-*Return*
-    A ``DriverInterface`` instance for chaining method calls.
+.. code-block:: php
 
-DriverInterface::get
-~~~~~~~~~~~~~~~~~~~~
-Retrieves a previously stored value ::
+    public DriverInterface DriverInterface::set(string $key, mixed $value [, int $expire = -1])
 
-    public mixed DriverInterface::get(string $key [, mixed $default = false])
++------------+--------+------------------------------------+
+| Parameters | Type   | Description                        |
++============+========+====================================+
+| $key       | string | The key where value will be stored |
++------------+--------+------------------------------------+
+| $value     | mixed  | The value to store                 |
++------------+--------+------------------------------------+
+| $expire    | int    | The live time of cache in seconds  |
++------------+--------+------------------------------------+
 
-*Description*
++-------------------------------+-----------------------------------------------------------+
+| Return                        | Description                                               |
++===============================+===========================================================+
+| Slick\\Cache\\DriverInterface | A ``DriverInterface`` instance for chaining method calls. |
++-------------------------------+-----------------------------------------------------------+
+
+
+Slick\\Cache\\DriverInterface::get()
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     Retrieves a previously stored value. You can optionally set the value returned
     in case of cache driver has no value for provided key.
 
-*Parameters*
-    * key: The key where value will be stored
-    * default: The value returned if cache driver has no value for provided key
+.. code-block:: php
 
-*Return*
-    The stored value or the default value if cache driver has no value for provided key
+    public mixed DriverInterface::get(string $key [, mixed $default = false])
 
-DriverInterface::erase
-~~~~~~~~~~~~~~~~~~~~~~
-Erase the value stored with a given key ::
++------------+--------+------------------------------------------------------------------+
+| Parameters | Type   | Description                                                      |
++============+========+==================================================================+
+| $key       | string | The key where value was stored                                   |
++------------+--------+------------------------------------------------------------------+
+| $default   | mixed  | The value returned if cache driver has no value for provided key |
++------------+--------+------------------------------------------------------------------+
 
-    public DriverInterface DriverInterface::erase(string $key)
++--------+-----------------------------------------------------------+
+| Return | Description                                               |
++========+===========================================================+
+| mixed  | The stored value or the default value if cache driver has |
+|        | no value for provided key                                 |
++--------+-----------------------------------------------------------+
 
-*Description*
+
+Slick\\Cache\\DriverInterface::erase()
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     Erase the value stored with a given key.
     You can use the "?" and "*" wildcards to delete all matching keys.
     The "?" means a place holders for one unknown character, the "*" is
     a place holder for various characters.
 
-*Parameters*
-    * key: The key where value was stored
+.. code-block:: php
 
-*Return*
-    A ``DriverInterface`` instance for chaining method calls.
+    public DriverInterface DriverInterface::erase(string $key)
 
++------------+--------+------------------------------------------------------------------+
+| Parameters | Type   | Description                                                      |
++============+========+==================================================================+
+| $key       | string | The key where value was stored                                   |
++------------+--------+------------------------------------------------------------------+
+
++-------------------------------+-----------------------------------------------------------+
+| Return                        | Description                                               |
++===============================+===========================================================+
+| Slick\\Cache\\DriverInterface | A ``DriverInterface`` instance for chaining method calls. |
++-------------------------------+-----------------------------------------------------------+
 
 .. warning::
     The use of "?" and "*" placeholder is only implemented in the drivers that are
@@ -161,6 +182,21 @@ Erase the value stored with a given key ::
     placeholders search you can extend ``Slick\Cache\Driver\AbstractDriver`` witch
     uses the ``DriverInterface::get()`` and ``DriverInterface::set()`` methods to
     achieve the wildcards key search feature.
+
+
+Slick\\Cache\\DriverInterface::flush()
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Flushes all values controlled by this cache driver.
+
+.. code-block:: php
+
+    public DriverInterface DriverInterface::flush()
+
++-------------------------------+-----------------------------------------------------------+
+| Return                        | Description                                               |
++===============================+===========================================================+
+| Slick\\Cache\\DriverInterface | A ``DriverInterface`` instance for chaining method calls. |
++-------------------------------+-----------------------------------------------------------+
 
 Initializing cache with Slick\\Configuration
 --------------------------------------------

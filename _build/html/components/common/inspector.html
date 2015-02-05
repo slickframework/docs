@@ -1,0 +1,680 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Class inspector &mdash; Slick Framework 1.0.0 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="Slick Framework 1.0.0 documentation" href="../../index.html"/>
+        <link rel="up" title="Common" href="../common.html"/>
+        <link rel="next" title="Database Access" href="../database.html"/>
+        <link rel="prev" title="Other usages" href="singleton.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="../../index.html" class="fa fa-home"> Slick Framework</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Components</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../cache.html">Cache</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../common.html">Common</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database.html">Database Access</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dependency.html">Dependency Injection Container</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../template.html">Template</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">Slick Framework</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../index.html">Components</a> &raquo;</li>
+      
+          <li><a href="../common.html">Common</a> &raquo;</li>
+      
+    <li>Class inspector</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="../../_sources/components/common/inspector.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <div class="section" id="class-inspector">
+<h1><a class="toc-backref" href="#id1">Class inspector</a><a class="headerlink" href="#class-inspector" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="table-of-contents">
+<p class="topic-title first">Table of Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#class-inspector" id="id1">Class inspector</a><ul>
+<li><a class="reference internal" href="#inspect-and-annotations" id="id2">Inspect and Annotations</a><ul>
+<li><a class="reference internal" href="#inspect-classes-or-objects" id="id3">Inspect classes or objects</a></li>
+<li><a class="reference internal" href="#retrieve-the-annotations" id="id4">Retrieve the annotations</a></li>
+<li><a class="reference internal" href="#working-with-annotations-list" id="id5">Working with annotations list</a></li>
+<li><a class="reference internal" href="#annotation-object" id="id6">Annotation object</a></li>
+<li><a class="reference internal" href="#annotations-parser" id="id7">Annotations Parser</a></li>
+<li><a class="reference internal" href="#defining-your-own-annotations" id="id8">Defining your own annotations</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="inspect-and-annotations">
+<h2><a class="toc-backref" href="#id2">Inspect and Annotations</a><a class="headerlink" href="#inspect-and-annotations" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">Slick\Common</span></tt> component also has an <tt class="docutils literal"><span class="pre">Inspector</span></tt> utility class that can hel
+you with class or object inspection and <tt class="docutils literal"><span class="pre">Annotations</span></tt> parsing. It is also possible
+to define custom annotations to use with your classes. The base class uses the
+<tt class="docutils literal"><span class="pre">Slick\Common\Inspector</span></tt> to determine the visibility and access to its properties.</p>
+<div class="section" id="inspect-classes-or-objects">
+<h3><a class="toc-backref" href="#id3">Inspect classes or objects</a><a class="headerlink" href="#inspect-classes-or-objects" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">Slick\Common\Inspector::__construct()</span></tt> needs only an object or a full qualified class
+name to retrieve metadata from that class. Lets consider the following class:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="k">namespace</span> <span class="nx">Models</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">Slick\Common\Base</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">User</span> <span class="k">extends</span> <span class="nx">Base</span>
+<span class="p">{</span>
+    <span class="sd">/**</span>
+<span class="sd">     * @readwrite</span>
+<span class="sd">     * @column type=text, size=tiny</span>
+<span class="sd">     * @var string</span>
+<span class="sd">     */</span>
+    <span class="k">protected</span> <span class="nv">$_name</span><span class="p">;</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * @readwrite</span>
+<span class="sd">     * @var int</span>
+<span class="sd">     */</span>
+    <span class="k">protected</span> <span class="nv">$_age</span><span class="p">;</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * @readwrite</span>
+<span class="sd">     * @var string</span>
+<span class="sd">     */</span>
+    <span class="k">protected</span> <span class="nv">$_active</span><span class="p">;</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * Check if age is under 18 years old</span>
+<span class="sd">     *</span>
+<span class="sd">     * @return boolean</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">isTeenager</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">_age</span> <span class="o">&lt;</span> <span class="mi">18</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Given the above class definition lets inspect its metadata with <tt class="docutils literal"><span class="pre">Slick\Common\Inspector</span></tt>:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Slick\Common\Inspector</span><span class="p">;</span>
+
+<span class="nv">$inspector</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Inspector</span><span class="p">(</span><span class="s1">&#39;\Models\User&#39;</span><span class="p">);</span>
+
+<span class="c1">// Getting the list of properties</span>
+<span class="nv">$propertyList</span> <span class="o">=</span> <span class="nv">$inspector</span><span class="o">-&gt;</span><span class="na">getClassProperties</span><span class="p">();</span>   <span class="c1">// -&gt; [&#39;_name&#39;, &#39;_age&#39;, &#39;_active&#39;]</span>
+
+<span class="c1">// Getting the list of methods</span>
+<span class="nv">$methodList</span> <span class="o">=</span> <span class="nv">$Inspector</span><span class="o">-&gt;</span><span class="na">getClassMethods</span><span class="p">();</span>        <span class="c1">// -&gt; [&#39;isTeenager&#39;]</span>
+
+<span class="nv">$inspector</span><span class="o">-&gt;</span><span class="na">hasMethod</span><span class="p">(</span><span class="s1">&#39;getName&#39;</span><span class="p">);</span>                   <span class="c1">// FALSE</span>
+<span class="nv">$inspector</span><span class="o">-&gt;</span><span class="na">hasProperty</span><span class="p">(</span><span class="s1">&#39;_age&#39;</span><span class="p">);</span>                    <span class="c1">// TRUE</span>
+</pre></div>
+</div>
+<p>Those are the simplest methods of <tt class="docutils literal"><span class="pre">Slick\Common\Inspector</span></tt>. Just retrieve the property
+and method names.</p>
+</div>
+<div class="section" id="retrieve-the-annotations">
+<h3><a class="toc-backref" href="#id4">Retrieve the annotations</a><a class="headerlink" href="#retrieve-the-annotations" title="Permalink to this headline">¶</a></h3>
+<p>Now we have the knowledge of what properties and methods the class have lets retrieve
+the DockBlock annotations present in the code.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="nv">$inspector</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Inspector</span><span class="p">(</span><span class="s1">&#39;Models\User&#39;</span><span class="p">);</span>
+
+<span class="nv">$annotations</span> <span class="o">=</span> <span class="nv">$inspector</span><span class="o">-&gt;</span><span class="na">getPropertyAnnotations</span><span class="p">(</span><span class="s1">&#39;_name&#39;</span><span class="p">);</span>
+
+<span class="c1">// Annotations is an ArrayObject that contains all defined annotations of a given</span>
+<span class="c1">// comment block. In this case the comment block for _name property.</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nv">$annotations</span><span class="o">-&gt;</span><span class="na">hasAnnotation</span><span class="p">(</span><span class="s1">&#39;column&#39;</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nv">$columnAnnotation</span> <span class="o">=</span> <span class="nv">$annotations</span><span class="o">-&gt;</span><span class="na">getAnnotation</span><span class="p">(</span><span class="s1">&#39;column&#39;</span><span class="p">);</span>
+
+    <span class="nv">$columnAnnotation</span><span class="o">-&gt;</span><span class="na">getName</span><span class="p">();</span>           <span class="c1">//-&gt; returns &#39;column&#39;</span>
+    <span class="nv">$columnAnnotation</span><span class="o">-&gt;</span><span class="na">getValue</span><span class="p">();</span>          <span class="c1">//-&gt; returns TRUE</span>
+    <span class="nv">$columnAnnotation</span><span class="o">-&gt;</span><span class="na">getParameter</span><span class="p">(</span><span class="s1">&#39;size&#39;</span><span class="p">)</span> <span class="c1">//-&gt; It will have &#39;tiny&#39;</span>
+<span class="p">{</span>
+
+<span class="c1">// Check another annotation</span>
+<span class="c1">// Here you can optionally use the @ as this may seem clean in your code</span>
+<span class="k">if</span> <span class="p">(</span><span class="nv">$annotations</span><span class="o">-&gt;</span><span class="na">hasAnnotation</span><span class="p">(</span><span class="s1">&#39;@var&#39;</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nv">$var</span> <span class="o">=</span> <span class="nv">$annotations</span><span class="o">-&gt;</span><span class="na">getAnnotation</span><span class="p">(</span><span class="s1">&#39;@var&#39;</span><span class="p">);</span>
+
+    <span class="nv">$vat</span><span class="o">-&gt;</span><span class="na">getValue</span><span class="p">();</span>   <span class="c1">// This will return the &#39;string&#39; value</span>
+    <span class="c1">// if the first parameter of the annotations is a string it will be used as</span>
+    <span class="c1">// the value for that annotation.</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>There hare tree methods that you can use to retrieve the annotations present in comments:</p>
+<div class="section" id="slick-common-inspector-getclassannotations">
+<h4>Slick\Common\Inspector::getClassAnnotations()<a class="headerlink" href="#slick-common-inspector-getclassannotations" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div>Retrieves a list of annotations from the class comment block</div></blockquote>
+<div class="highlight-php"><div class="highlight"><pre><span class="k">public</span> <span class="nx">Inspector\AnnotationsList</span> <span class="nx">Inspector</span><span class="o">::</span><span class="na">getClassAnnotations</span><span class="p">();</span>
+</pre></div>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="59%" />
+<col width="41%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Return</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">Slick\Common\Inspector\AnnotationsList</span></tt></td>
+<td>A list of Annotation objects</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="slick-common-inspector-getpropertyannotations">
+<h4>Slick\Common\Inspector::getPropertyAnnotations()<a class="headerlink" href="#slick-common-inspector-getpropertyannotations" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div>Retrieve a list of annotations from a given property</div></blockquote>
+<div class="highlight-php"><div class="highlight"><pre><span class="k">public</span> <span class="nx">Inspector\AnnotationsList</span> <span class="nx">Inspector</span><span class="o">::</span><span class="na">getPropertyAnnotations</span><span class="p">(</span><span class="nx">string</span> <span class="nv">$property</span><span class="p">);</span>
+</pre></div>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="26%" />
+<col width="21%" />
+<col width="53%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Parameters</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td rowspan="2"><tt class="docutils literal"><span class="pre">$property</span></tt></td>
+<td rowspan="2"><tt class="docutils literal"><span class="pre">string</span></tt></td>
+<td rowspan="2">The property name to inspect</td>
+</tr>
+<tr class="row-odd"></tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<colgroup>
+<col width="59%" />
+<col width="41%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Return</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">Slick\Common\Inspector\AnnotationsList</span></tt></td>
+<td>A list of Annotation objects</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="slick-common-inspector-getmethodannotations">
+<h4>Slick\Common\Inspector::getMethodAnnotations()<a class="headerlink" href="#slick-common-inspector-getmethodannotations" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div>Retrieves a list of annotations form a given method.</div></blockquote>
+<div class="highlight-php"><div class="highlight"><pre><span class="k">public</span> <span class="nx">Inspector\AnnotationsList</span> <span class="nx">Inspector</span><span class="o">::</span><span class="na">getMethodAnnotations</span><span class="p">(</span><span class="nx">string</span> <span class="nv">$method</span><span class="p">);</span>
+</pre></div>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="23%" />
+<col width="53%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Parameters</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td rowspan="2"><tt class="docutils literal"><span class="pre">$method</span></tt></td>
+<td rowspan="2"><tt class="docutils literal"><span class="pre">string</span></tt></td>
+<td rowspan="2">The method name to inspect</td>
+</tr>
+<tr class="row-odd"></tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<colgroup>
+<col width="59%" />
+<col width="41%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Return</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">Slick\Common\Inspector\AnnotationsList</span></tt></td>
+<td>A list of Annotation objects</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="working-with-annotations-list">
+<h3><a class="toc-backref" href="#id5">Working with annotations list</a><a class="headerlink" href="#working-with-annotations-list" title="Permalink to this headline">¶</a></h3>
+<p>The annotation list is a collection of <tt class="docutils literal"><span class="pre">Slick\Common\Inspector\Annotation</span></tt> objects that
+extends from <tt class="docutils literal"><span class="pre">ArrayObject</span></tt>. Therefore it can be used as an array or be iterated in
+<tt class="docutils literal"><span class="pre">foreach</span></tt> loops.</p>
+<div class="section" id="slick-common-inspector-annotationslist-hasannotation">
+<h4>Slick\Common\Inspector\AnnotationsList::hasAnnotation()<a class="headerlink" href="#slick-common-inspector-annotationslist-hasannotation" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div>Checks if current list contains an annotation with the provided name</div></blockquote>
+<div class="highlight-php"><div class="highlight"><pre><span class="k">public</span> <span class="nx">bool</span> <span class="nx">Inspector\AnnotationsList</span><span class="o">::</span><span class="na">hasAnnotation</span><span class="p">(</span><span class="nx">string</span> <span class="nv">$name</span><span class="p">);</span>
+</pre></div>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="21%" />
+<col width="21%" />
+<col width="58%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Parameters</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td rowspan="2"><tt class="docutils literal"><span class="pre">$name</span></tt></td>
+<td rowspan="2"><tt class="docutils literal"><span class="pre">string</span></tt></td>
+<td rowspan="2">Annotation name. Ex.: <a class="reference external" href="mailto:'&#37;&#52;&#48;column">'<span>&#64;</span>column</a>&#8216;</td>
+</tr>
+<tr class="row-odd"></tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Return</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">bool</span></tt></td>
+<td>True if current list contains an annotation with the provided name, False otherwise</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="slick-common-inspector-annotationslist-getannotation">
+<h4>Slick\Common\Inspector\AnnotationsList::getAnnotation()<a class="headerlink" href="#slick-common-inspector-annotationslist-getannotation" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div>Returns the annotation with the provided name.</div></blockquote>
+<div class="highlight-php"><div class="highlight"><pre><span class="k">public</span> <span class="nx">Inspector\AnnotationInterface</span> <span class="nx">Inspector\AnnotationsList</span><span class="o">::</span><span class="na">getAnnotation</span><span class="p">(</span><span class="nx">string</span> <span class="nv">$name</span><span class="p">);</span>
+</pre></div>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="21%" />
+<col width="21%" />
+<col width="58%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Parameters</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td rowspan="2"><tt class="docutils literal"><span class="pre">$name</span></tt></td>
+<td rowspan="2"><tt class="docutils literal"><span class="pre">string</span></tt></td>
+<td rowspan="2">Annotation name. Ex.: <a class="reference external" href="mailto:'&#37;&#52;&#48;column">'<span>&#64;</span>column</a>&#8216;</td>
+</tr>
+<tr class="row-odd"></tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<colgroup>
+<col width="64%" />
+<col width="36%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Return</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">Slick\Common\Inspector\Annotation</span></tt></td>
+<td>An annotation object</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">If you try to get an annotation that is not in the annotations list an
+<tt class="docutils literal"><span class="pre">Slick\Common\Exception\InvalidArgumentException</span></tt> will be thrown. It is very
+important that you test if the annotation exists before you retrieve it from
+the list.</p>
+</div>
+</div>
+</div>
+<div class="section" id="annotation-object">
+<h3><a class="toc-backref" href="#id6">Annotation object</a><a class="headerlink" href="#annotation-object" title="Permalink to this headline">¶</a></h3>
+<p>Annotation object is a set of attributes that a given annotation has in the comment
+DocBlock when it is parsed. The values set in the comment for the annotation can be
+retrieved by their names with the methods described bellow.</p>
+<div class="section" id="slick-common-inspector-annotationinterface-getvalue">
+<h4>Slick\Common\Inspector\AnnotationInterface::getValue()<a class="headerlink" href="#slick-common-inspector-annotationinterface-getvalue" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div>Returns the value in the tag for single value annotations. Ex.: &#64;before test</div></blockquote>
+<div class="highlight-php"><div class="highlight"><pre><span class="k">public</span> <span class="nx">mixed</span> <span class="nx">Inspector\AnnotationInterface</span><span class="o">::</span><span class="na">getValue</span><span class="p">();</span>
+</pre></div>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="22%" />
+<col width="78%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Return</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">mixed</span></tt></td>
+<td>The parsed value of the annotation tag</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="slick-common-inspector-annotationinterface-getparameter">
+<h4>Slick\Common\Inspector\AnnotationInterface::getParameter()<a class="headerlink" href="#slick-common-inspector-annotationinterface-getparameter" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div>Returns the value of the provided parameter name for multiple value annotations.
+Ex:. &#64;after foo=3, bar=true.</div></blockquote>
+<div class="highlight-php"><div class="highlight"><pre><span class="k">public</span> <span class="nx">mixed</span> <span class="nx">Inspector\AnnotationInterface</span><span class="o">::</span><span class="na">getParameter</span><span class="p">(</span><span class="nx">string</span> <span class="nv">$name</span><span class="p">);</span>
+</pre></div>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="60%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Parameters</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">$name</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">string</span></tt></td>
+<td>The parameter name</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<colgroup>
+<col width="19%" />
+<col width="81%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Return</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">mixed</span></tt></td>
+<td>The parsed value of the annotation parameter</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="annotations-parser">
+<h3><a class="toc-backref" href="#id7">Annotations Parser</a><a class="headerlink" href="#annotations-parser" title="Permalink to this headline">¶</a></h3>
+<p>Annotations parse is a very simple yet versatile parser that can understand a wide range of
+annotations and translate them into list, objects, numbers, etc.</p>
+<div class="section" id="scalar-values">
+<h4>Scalar values<a class="headerlink" href="#scalar-values" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-php"><div class="highlight"><pre><span class="sd">/**</span>
+<span class="sd"> * Simple strings, integers and float numbers</span>
+<span class="sd"> *</span>
+<span class="sd"> * @annotation foo=bar, baz=14, size=2.3</span>
+<span class="sd"> */</span>
+
+ <span class="nv">$annotation</span><span class="o">-&gt;</span><span class="na">getParameter</span><span class="p">(</span><span class="s1">&#39;size&#39;</span><span class="p">);</span> <span class="c1">// will return 2.3 float number</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="arrays-and-lists">
+<h4>Arrays and lists<a class="headerlink" href="#arrays-and-lists" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-php"><div class="highlight"><pre><span class="sd">/**</span>
+<span class="sd"> * Arrays and lists</span>
+<span class="sd"> *</span>
+<span class="sd"> * @annotation foo=[one, two, three], array=[foo=[other, list]]</span>
+<span class="sd"> */</span>
+
+ <span class="nv">$annotation</span><span class="o">-&gt;</span><span class="na">getParameter</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span> <span class="c1">// will return [&#39;one&#39;, &#39;two&#39;, &#39;three&#39;]</span>
+ <span class="nv">$annotation</span><span class="o">-&gt;</span><span class="na">getParameter</span><span class="p">(</span><span class="s1">&#39;array&#39;</span><span class="p">);</span> <span class="c1">// will return [&#39;foo&#39; =&gt; [&#39;other&#39;, &#39;list&#39;]]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="objects-json-notation">
+<h4>Objects (json notation)<a class="headerlink" href="#objects-json-notation" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-php"><div class="highlight"><pre><span class="sd">/**</span>
+<span class="sd"> * Objects</span>
+<span class="sd"> *</span>
+<span class="sd"> * @annotation foo={&quot;bar&quot;: [1, 2, 3]}</span>
+<span class="sd"> */</span>
+
+ <span class="nv">$annotation</span><span class="o">-&gt;</span><span class="na">getParameter</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span> <span class="c1">// will return {&quot;bar&quot; =&gt; [1, 2, 3]}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="booleans">
+<h4>Booleans<a class="headerlink" href="#booleans" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-php"><div class="highlight"><pre><span class="sd">/**</span>
+<span class="sd"> * Booleans</span>
+<span class="sd"> *</span>
+<span class="sd"> * @annotation foo=true, bar=false</span>
+<span class="sd"> */</span>
+
+ <span class="nv">$annotation</span><span class="o">-&gt;</span><span class="na">getParameter</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span> <span class="c1">// will return TRUE</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="defining-your-own-annotations">
+<h3><a class="toc-backref" href="#id8">Defining your own annotations</a><a class="headerlink" href="#defining-your-own-annotations" title="Permalink to this headline">¶</a></h3>
+<p>It is possible to define you own annotations that will have a default set of parameters
+and will help you when you don&#8217;t set the parameters in the comment block and need a value
+for those parameters.</p>
+<p>Lets see an example:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Slick\Common\Inspector</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Slick\Common\Inspector\Annotation</span><span class="p">;</span>
+
+<span class="c1">// A class to inspect</span>
+<span class="k">class</span> <span class="nc">Foo</span>
+<span class="p">{</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * @custom test, foo=true</span>
+<span class="sd">     */</span>
+     <span class="k">private</span> <span class="nv">$_name</span><span class="p">;</span>
+
+<span class="p">}</span>
+
+<span class="c1">// Our custom annotation</span>
+<span class="k">class</span> <span class="nc">CustomAnnotation</span> <span class="k">extends</span> <span class="nx">Annotation</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="nv">$_parameters</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;foo&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+        <span class="s1">&#39;bar&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span>
+    <span class="p">];</span>
+<span class="p">}</span>
+
+
+<span class="c1">// Register our new annotation</span>
+<span class="nx">Inspector</span><span class="o">::</span><span class="na">addAnnotationClass</span><span class="p">(</span><span class="s1">&#39;custom&#39;</span><span class="p">,</span> <span class="s1">&#39;\CustomAnnotation&#39;</span><span class="p">);</span>
+
+<span class="nv">$inspector</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Inspector</span><span class="p">(</span><span class="s1">&#39;\Foo&#39;</span><span class="p">);</span>
+
+<span class="nv">$annotation</span> <span class="o">=</span> <span class="nv">$inspector</span><span class="o">-&gt;</span><span class="na">getPropertyAnnotations</span><span class="p">(</span><span class="s1">&#39;_name&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getAnnotation</span><span class="p">(</span><span class="s1">&#39;@custom&#39;</span><span class="p">);</span>
+
+<span class="nv">$annotations</span><span class="o">-&gt;</span><span class="na">getParameter</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span>  <span class="c1">// will return TRUE</span>
+<span class="nv">$annotations</span><span class="o">-&gt;</span><span class="na">getParameter</span><span class="p">(</span><span class="s1">&#39;bar&#39;</span><span class="p">);</span>  <span class="c1">// will return TRUE</span>
+<span class="nv">$annotations</span><span class="o">-&gt;</span><span class="na">getValue</span><span class="p">();</span>           <span class="c1">// will return &#39;test&#39; string</span>
+</pre></div>
+</div>
+<p>As you can see it is very simple to have an annotation that you can define all parameter
+with default values and use them safely even if they are not present in the DocBlock.
+You only need to add the class to the inspector class map once, in your application
+bootstrap for example.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../database.html" class="btn btn-neutral float-right" title="Database Access"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="singleton.html" class="btn btn-neutral" title="Other usages"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Slick Framework.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'1.0.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
