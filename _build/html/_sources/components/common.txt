@@ -16,6 +16,33 @@ to the properties and inspect classes and properties.
     common/singleton
     common/inspector
 
+Installing via Composer
+-----------------------
+
+The recommended way to install Slick cache component is through `Composer <https://getcomposer.org/>`_.
+
+.. code-block:: bash
+
+    # Install Composer
+    curl -sS https://getcomposer.org/installer | php
+
+You can add Slick cache as a dependency using the composer.phar CLI:
+
+.. code-block:: bash
+
+    php composer.phar require slick/cache
+
+Alternatively, you can specify Slick cache as a dependency in your project's
+existing composer.json file:
+
+.. code-block:: js
+
+    {
+      "require": {
+         "slick/common": "*"
+      }
+   }
+
 Understanding the "Base" class
 ------------------------------
 The ``Slick\Common\Base`` class is one of the most important classes of Slick. It is
